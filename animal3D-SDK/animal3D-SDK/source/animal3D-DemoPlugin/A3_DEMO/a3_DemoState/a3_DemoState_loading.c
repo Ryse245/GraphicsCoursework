@@ -202,7 +202,7 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 
 		// ****TO-DO: 
 		//	-> 1a. scene overlay model data
-		/*
+		
 		// static scene procedural objects
 		//	(axes, grid, skybox, unit quad)
 		a3proceduralCreateDescriptorAxes(displayShapes + 0, a3geomFlag_wireframe, 0.0f, 1);
@@ -214,7 +214,7 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 			a3proceduralGenerateGeometryData(displayShapesData + i, displayShapes + i, 0);
 			a3fileStreamWriteObject(fileStream, displayShapesData + i, (a3_FileStreamWriteFunc)a3geometrySaveDataBinary);
 		}
-		*/
+		
 
 		// hidden volumes and shapes
 		//	(light volumes)
@@ -229,7 +229,7 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 
 		// ****TO-DO: 
 		//	-> 1b. scene object procedural model data
-		/*
+		
 		// other procedurally-generated objects
 		a3proceduralCreateDescriptorPlane(proceduralShapes + 0, a3geomFlag_texcoords, a3geomAxis_default, 24.0f, 24.0f, 12, 12);
 		a3proceduralCreateDescriptorSphere(proceduralShapes + 1, a3geomFlag_texcoords, a3geomAxis_default, 1.0f, 32, 24);
@@ -240,18 +240,18 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 			a3proceduralGenerateGeometryData(proceduralShapesData + i, proceduralShapes + i, 0);
 			a3fileStreamWriteObject(fileStream, proceduralShapesData + i, (a3_FileStreamWriteFunc)a3geometrySaveDataBinary);
 		}
-		*/
+		
 
 		// ****TO-DO: 
-		//	-> 1b. scene object model loading
-		/*
+		//	-> 1c. scene object model loading
+		
 		// objects loaded from mesh files
 		for (i = 0; i < loadedModelsCount; ++i)
 		{
 			a3modelLoadOBJ(loadedModelsData + i, loadedShapes[i].filePath, loadedShapes[i].flag, loadedShapes[i].transform);
 			a3fileStreamWriteObject(fileStream, loadedModelsData + i, (a3_FileStreamWriteFunc)a3geometrySaveDataBinary);
 		}
-		*/
+		
 
 		// done
 		a3fileStreamClose(fileStream);
@@ -302,12 +302,12 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 
 	// ****TO-DO: 
 	//	-> 2b. vertex buffer creation
-	/*
+	
 	// create shared buffer
 	vbo_ibo = demoState->vbo_staticSceneObjectDrawBuffer;
 	a3bufferCreateSplit(vbo_ibo, "vbo/ibo:scene", a3buffer_vertex, sharedVertexStorage, sharedIndexStorage, 0, 0);
 	sharedVertexStorage = 0;
-	*/
+	
 
 	// ****TO-DO: 
 	//	-> 3c. position-only vertex format

@@ -203,7 +203,7 @@ extern "C"
 
 		// ****TO-DO: 
 		//	-> 2a. vertex buffers union
-		/*
+		
 		// draw data buffers
 		union {
 			a3_VertexBuffer drawDataBuffer[demoStateMaxCount_drawDataBuffer];
@@ -212,11 +212,11 @@ extern "C"
 					vbo_staticSceneObjectDrawBuffer[1];			// buffer to hold all data for static scene objects (e.g. grid)
 			};
 		};
-		*/
+		
 
 		// ****TO-DO: 
 		//	-> 3a. vertex arrays union
-		/*
+		
 		// vertex array objects
 		union {
 			a3_VertexArrayDescriptor vertexArray[demoStateMaxCount_vertexArray];
@@ -227,7 +227,7 @@ extern "C"
 					vao_position[1];							// VAO for vertex format with only position
 			};
 		};
-		*/
+		
 
 		// ****TO-DO: 
 		//	-> 3b. drawables union
