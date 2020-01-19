@@ -231,7 +231,7 @@ extern "C"
 
 		// ****TO-DO: 
 		//	-> 3b. drawables union
-		/*
+		
 		// drawables
 		union {
 			a3_VertexDrawable drawable[demoStateMaxCount_drawable];
@@ -250,12 +250,12 @@ extern "C"
 					draw_teapot[1];								// can't not have a Utah teapot
 			};
 		};
-		*/
+		
 
 
 		// ****TO-DO: 
 		//	-> 4a. shader programs union
-		/*
+		
 		// shader programs and uniforms
 		union {
 			a3_DemoStateShaderProgram shaderProgram[demoStateMaxCount_shaderProgram];
@@ -267,7 +267,7 @@ extern "C"
 					prog_drawColorAttrib_instanced[1];			// draw color attribute with instancing
 			};
 		};
-		*/
+		
 
 
 		// managed objects, no touchie

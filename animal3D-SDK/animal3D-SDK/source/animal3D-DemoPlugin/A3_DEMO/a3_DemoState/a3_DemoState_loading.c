@@ -35,7 +35,7 @@
 
 // **WARNING: FOR TESTING/COMPARISON ONLY, DO NOT USE IN DELIVERABLE BUILDS**
 // uncomment this to allow shader decoding (if available)
-#define A3_USER_ENABLE_SHADER_DECODING
+//#define A3_USER_ENABLE_SHADER_DECODING
 
 
 //-----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 
 	// ****TO-DO: 
 	//	-> 3c. position-only vertex format
-	/*
+	
 	// create vertex formats and drawables
 	// grid: position attribute only
 	// overlay objects are also just position
@@ -321,21 +321,21 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, displayShapesData + 1, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 //	currentDrawable = demoState->draw_???;
 //	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, hiddenShapesData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
-	*/
+	
 
 	// ****TO-DO: 
 	//	-> 3d. position and color vertex format
-	/*
+	
 	// axes: position and color
 	vao = demoState->vao_position_color;
 	a3geometryGenerateVertexArray(vao, "vao:pos+col", displayShapesData + 0, vbo_ibo, sharedVertexStorage);
 	currentDrawable = demoState->draw_axes;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, displayShapesData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
-	*/
+	
 
 	// ****TO-DO: 
 	//	-> 3e. position and texture coordinate vertex format
-	/*
+	
 	// skybox, unit quad: position and texture coordinates
 	vao = demoState->vao_position_texcoord;
 	a3geometryGenerateVertexArray(vao, "vao:pos+tex", displayShapesData + 2, vbo_ibo, sharedVertexStorage);
@@ -353,7 +353,7 @@ void a3demo_loadGeometry(a3_DemoState *demoState)
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, proceduralShapesData + 3, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
 	currentDrawable = demoState->draw_teapot;
 	sharedVertexStorage += a3geometryGenerateDrawable(currentDrawable, loadedModelsData + 0, vao, vbo_ibo, sceneCommonIndexFormat, 0, 0);
-	*/
+	
 
 
 	// release data when done
@@ -418,7 +418,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 	// ****TO-DO: 
 	//	-> 4b. shader declaration
-	/*
+	
 	// list of all unique shaders
 	// this is a good idea to avoid multi-loading 
 	//	those that are shared between programs
@@ -442,26 +442,26 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	} shaderList = {
 		{
 			// ****REMINDER: 'Encoded' shaders are available for proof-of-concept
-			//	testing ONLY!  Insert /e before file names.
+			//	testing ONLY!  Insert e/ before file names.
 			// DO NOT SUBMIT WORK USING ENCODED SHADERS OR YOU WILL GET ZERO!!!
 
 			// vs
 			// base
-			{ { { 0 },	"shdr-vs:passthru",				a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passthru_vs4x.glsl" } } },
-			{ { { 0 },	"shdr-vs:passthru-trans",		a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passthru_transform_vs4x.glsl" } } },
-			{ { { 0 },	"shdr-vs:pass-col-trans",		a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passColor_transform_vs4x.glsl" } } },
-			{ { { 0 },	"shdr-vs:passthru-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passthru_transform_instanced_vs4x.glsl" } } },
-			{ { { 0 },	"shdr-vs:pass-col-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"e/passColor_transform_instanced_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:passthru",				a3shader_vertex  ,	1,{ A3_DEMO_VS"passthru_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:passthru-trans",		a3shader_vertex  ,	1,{ A3_DEMO_VS"passthru_transform_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:pass-col-trans",		a3shader_vertex  ,	1,{ A3_DEMO_VS"passColor_transform_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:passthru-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"passthru_transform_instanced_vs4x.glsl" } } },
+			{ { { 0 },	"shdr-vs:pass-col-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"passColor_transform_instanced_vs4x.glsl" } } },
 
 			// fs
 			// base
-			{ { { 0 },	"shdr-fs:draw-col-unif",		a3shader_fragment,	1,{ A3_DEMO_FS"e/drawColorUnif_fs4x.glsl" } } },
-			{ { { 0 },	"shdr-fs:draw-col-attr",		a3shader_fragment,	1,{ A3_DEMO_FS"e/drawColorAttrib_fs4x.glsl" } } },
+			{ { { 0 },	"shdr-fs:draw-col-unif",		a3shader_fragment,	1,{ A3_DEMO_FS"drawColorUnif_fs4x.glsl" } } },
+			{ { { 0 },	"shdr-fs:draw-col-attr",		a3shader_fragment,	1,{ A3_DEMO_FS"drawColorAttrib_fs4x.glsl" } } },
 		}
 	};
 	a3_DemoStateShader *const shaderListPtr = (a3_DemoStateShader *)(&shaderList), *shaderPtr;
 	const a3ui32 numUniqueShaders = sizeof(shaderList) / sizeof(a3_DemoStateShader);
-	*/
+	
 
 
 	printf("\n\n---------------- LOAD SHADERS STARTED  ---------------- \n");
@@ -469,7 +469,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 
 	// ****TO-DO: 
 	//	-> 4c. shader loading and compilation
-	/*
+	
 	// load unique shaders: 
 	//	- load file contents
 	//	- create and compile shader object
@@ -483,12 +483,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		if (flag == 0)
 			printf("\n ^^^^ SHADER %u '%s' FAILED TO COMPILE \n\n", i, shaderPtr->shader->handle->name);
 	}
-	*/
+	
 
 
 	// ****TO-DO: 
 	//	-> 4d. program initialization
-	/*
+	
 	// setup programs: 
 	//	- create program object
 	//	- attach shader objects
@@ -514,12 +514,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramCreate(currentDemoProg->program, "prog:draw-col-attr-inst");
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passColor_transform_instanced_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawColorAttrib_fs->shader);
-	*/
+	
 
 
 	// ****TO-DO: 
 	//	-> 4e. program linkage, validation and cleanup
-	/*
+	
 	// activate a primitive for validation
 	// makes sure the specified geometry can draw using programs
 	// good idea to activate the drawable with the most attributes
@@ -545,12 +545,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		shaderPtr = shaderListPtr + i;
 		a3shaderRelease(shaderPtr->shader);
 	}
-	*/
+	
 
 
 	// ****TO-DO: 
 	//	-> 4f. set default uniform values
-	/*
+	
 	// prepare uniforms algorithmically instead of manually for all programs
 	for (i = 0; i < demoStateMaxCount_shaderProgram; ++i)
 	{
@@ -588,7 +588,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		if ((uLocation = currentDemoProg->ubTransformMVP) >= 0)
 			a3shaderUniformBlockBind(currentDemoProg->program, uLocation, 0);
 	}
-	*/
+	
 
 
 	printf("\n\n---------------- LOAD SHADERS FINISHED ---------------- \n");
@@ -623,7 +623,7 @@ void a3demo_refresh(a3_DemoState *demoState)
 {
 	// ****TO-DO: 
 	//	-> 6d. validate graphics objects
-	/*
+	
 	a3_BufferObject *currentBuff = demoState->drawDataBuffer,
 		*const endBuff = currentBuff + demoStateMaxCount_drawDataBuffer;
 	a3_VertexArrayDescriptor *currentVAO = demoState->vertexArray,
@@ -659,7 +659,7 @@ void a3demo_refresh(a3_DemoState *demoState)
 	a3_refreshDrawable_internal(demoState->draw_cylinder, currentVAO, currentBuff);
 	a3_refreshDrawable_internal(demoState->draw_torus, currentVAO, currentBuff);
 	a3_refreshDrawable_internal(demoState->draw_teapot, currentVAO, currentBuff);
-	*/
+	
 
 	a3demo_initDummyDrawable_internal(demoState);
 }
