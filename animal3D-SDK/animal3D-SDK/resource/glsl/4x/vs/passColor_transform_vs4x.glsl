@@ -26,9 +26,12 @@
 
 // ****TO-DO: 
 //	1) declare uniform variable for MVP matrix; see demo code for hint
+uniform mat4 uMVP;
 //	2) correctly transform input position by MVP matrix
 //	3) declare attribute for vertex color input
+layout (location = 3) in vec4 aColor;
 //	4) declare varying to pass color input to fragment shader
+out vec4 fragColor;
 //	5) assign vertex color input to varying
 
 layout (location = 0) in vec4 aPosition;
@@ -36,5 +39,6 @@ layout (location = 0) in vec4 aPosition;
 void main()
 {
 	// DUMMY OUTPUT: directly assign input position to output position
-	gl_Position = aPosition;
+	fragColor = aColor;
+	gl_Position = uMVP*aPosition;
 }
