@@ -28,26 +28,39 @@
 //	1) declare uniform variable for texture; see demo code for hints
 uniform sampler2D uTex_dm;
 //	2) declare uniform variables for lights; see demo code for hints
+//CORRECT
 uniform int uLightCt;
+uniform vec4 uLightCol;
+//INCORRECT
 uniform float uLightSz;
 uniform float uLightSzInvSq;
-uniform vec4 uLightPos;
-uniform vec4 uLightCol;
+uniform vec3 uLightPos;
 
 //	3) declare inbound varying data
 in vec2 vTextureCoord;
-in vec4 vecNormal;
+in vec3 vecNormal;
 in vec4 viewPos;
 //	4) implement Lambert shading model
 //	Note: test all data and inbound values before using them!
 
 out vec4 rtFragColor;
 
+float lambertize()
+{
+	vec3 fragNormal = normalize(vecNormal);
+	vec3 lightNormal = normalize(uLightPos);
+	float lambProduct = max(0.0, dot(fragNormal, lightNormal));
+	return lambProduct;
+}
+
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE RED
 	//rtFragColor = vec4(vTextureCoord, 0,0);
-	//rtFragColor = vecNormal;
-	//rtFragColor = viewPos;
+	//rtFragColor = vec4(vecNormal,0);
+	//rtFragColor = uLightCol;
+	//rtFragColor = vec4(abs(uLightCt), 0,0,0);
+
+	//rtFragColor = lambertize() * uLightCol * texture(uTex_dm, vTextureCoord);
 	rtFragColor = texture(uTex_dm, vTextureCoord);
 }

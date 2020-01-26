@@ -40,7 +40,7 @@ layout (location = 2) in vec4 normal;
 //	7) declare MV matrix for normals; see demo code for hint
 uniform mat4 uMV_nrm;
 //	8) declare outbound normal
-out vec4 vecNormal;
+out vec3 vecNormal;
 //	10+) see instructions in passTexcoord...vs4x.glsl for information on 
 //		how to handle the texture coordinate
 layout (location = 8) in vec4 aTexCoord; 
@@ -58,8 +58,7 @@ void main()
 //	5) correctly transform view position by P matrix to get final position
 	gl_Position =  uP * viewPos;
 //	9) correctly transform input normal by MV normal matrix
-	vecNormal = uMV_nrm * normal;
+	vecNormal = vec3(uMV_nrm * normal);
 		
 	vTextureCoord = vec2 (uAtlas * aTexCoord);
-	//gl_Position = viewPos;
 }
