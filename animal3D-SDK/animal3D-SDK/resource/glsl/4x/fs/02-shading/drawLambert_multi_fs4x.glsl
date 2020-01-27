@@ -39,22 +39,22 @@ uniform vec4 uLightCol[4];
 
 //	3) declare inbound varying data
 in vec2 vTextureCoord;
-in vec3 vecNormal;
+in vec4 vecNormal;
 in vec4 viewPos;
 //	4) implement Lambert shading model
 //	Note: test all data and inbound values before using them!
 
 out vec4 rtFragColor;
 int test;
-/*
-float lambertize()
+
+float lambertize(vec4 V, vec4 L, vec4 F)
 {
-	vec3 fragNormal = normalize(vecNormal);
-	vec4 lightNormal = normalize(uLightPos);
+	vec4 fragNormal = normalize(V);
+	vec4 lightNormal = normalize(L-F);
 	float lambProduct = max(0.0, dot(fragNormal, lightNormal));
 	return lambProduct;
 }
-*/
+
 
 void main()
 {
@@ -62,7 +62,22 @@ void main()
 	//rtFragColor = vec4(vecNormal,0);
 	//rtFragColor = uLightPos[2];
 	//rtFragColor = vec4(uLightPos[1],1);
-	//rtFragColor = lambertize() * uLightCol * texture(uTex_dm, vTextureCoord);
+	//rtFragColor = (lambertize(vecNormal, uLightPos[0], viewPos) * uLightCol[0]) * texture(uTex_dm, vTextureCoord);
+	//rtFragColor = texture(uTex_dm, vTextureCoord);
 
-	rtFragColor = texture(uTex_dm, vTextureCoord);
+	vec4 diffLightCol[4];
+	vec4 finalLightCol;
+
+	for(int i = 0; i < uLightCt; i++)
+	{
+		diffLightCol[i] =  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
+	}
+
+	for(int i = 0; i < uLightCt; i++)
+	{
+		finalLightCol += diffLightCol[i];
+	}
+	
+	rtFragColor = finalLightCol * texture(uTex_dm, vTextureCoord);
+
 }
