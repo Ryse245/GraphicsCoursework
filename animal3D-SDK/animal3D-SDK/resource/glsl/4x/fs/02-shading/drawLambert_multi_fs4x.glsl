@@ -24,6 +24,8 @@
 
 #version 410
 
+////https://learnopengl.com/Lighting/Basic-Lighting helped with finding out what to do
+
 // ****TO-DO: 
 //	1) declare uniform variable for texture; see demo code for hints
 uniform sampler2D uTex_dm;
@@ -65,19 +67,13 @@ void main()
 	//rtFragColor = (lambertize(vecNormal, uLightPos[0], viewPos) * uLightCol[0]) * texture(uTex_dm, vTextureCoord);
 	//rtFragColor = texture(uTex_dm, vTextureCoord);
 
-	vec4 diffLightCol[4];
 	vec4 finalLightCol;
 
 	for(int i = 0; i < uLightCt; i++)
 	{
-		diffLightCol[i] =  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
+		finalLightCol +=  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
 	}
 
-	for(int i = 0; i < uLightCt; i++)
-	{
-		finalLightCol += diffLightCol[i];
-	}
-	
 	rtFragColor = finalLightCol * texture(uTex_dm, vTextureCoord);
 
 }
