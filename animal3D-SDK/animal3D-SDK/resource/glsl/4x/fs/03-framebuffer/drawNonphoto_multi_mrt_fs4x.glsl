@@ -33,6 +33,12 @@
 //	5) set location of final color render target (location 0)
 //	6) declare render targets for each attribute and shading component
 
+/*
+float kd = max(0.0, dot(...) // diffuse
+vec2 rampCoord = vec2(kd, 0.0);
+vec4 finalLightColor = texture(uTex_dm_ramp, rampCoord);
+*/
+
 out vec4 rtFragColor;
 
 void main()
