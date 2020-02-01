@@ -24,8 +24,6 @@
 */
 
 #version 410
-
-// ****TO-DO: 
 //	1) declare uniform variable for MV matrix; see demo code for hint
 uniform mat4 uMV;
 //	2) declare view position as outbound varying
@@ -45,7 +43,7 @@ out vec4 vecNormal;
 //		how to handle the texture coordinate
 layout (location = 8) in vec4 aTexCoord; 
 uniform mat4 uAtlas;
-out vec2 vTexcoord;
+out vec2 vTextureCoord;
 
 layout (location = 0) in vec4 aPosition;
 

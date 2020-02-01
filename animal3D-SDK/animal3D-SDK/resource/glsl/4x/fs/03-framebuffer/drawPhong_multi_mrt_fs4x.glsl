@@ -33,6 +33,15 @@
 //	5) set location of final color render target (location 0)
 //	6) declare render targets for each attribute and shading component
 
+out vec4 rtViewPos;	//Color target 1
+out vec4 rtViewNormal;	//Color target 2
+out vec4 rtAtlasTexcoord; //Color target 3
+out vec4 rtDiffMap; //Color target 4
+out vec4 rtSpecMap;	//Color target 5
+out vec4 rtDiffTotal;	//Color target 6
+out vec4 rtSpecTotal;	//Color target 7
+//Depth buffer?
+
 out vec4 rtFragColor;
 
 void main()

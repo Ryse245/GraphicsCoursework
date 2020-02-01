@@ -25,23 +25,23 @@
 
 #version 410
 
-// ****TO-DO: 
 //	1) declare uniform variable for MVP matrix; see demo code for hint
 uniform mat4 uMVP;
+
 //	3) declare texture coordinate attribute; see graphics library for location
-layout (location = 8) in vec4 aTexcoord;
+layout (location = 8) in vec4 aTexCoord; 
 //	4) declare atlas transform; see demo code for hint
 uniform mat4 uAtlas;
 //	5) declare texture coordinate outbound varying
-out vec2 vTexcoord;
+out vec2 vTextureCoord;
 
 layout (location = 0) in vec4 aPosition;
 
 void main()
 {
-	// DUMMY OUTPUT: directly assign input position to output position
-//	2) correctly transform input position by MVP matrix
+	//	2) correctly transform input position by MVP matrix
 	gl_Position = uMVP*aPosition;
 //	6) correctly transform input texture coordinate by atlas matrix
-	vTexcoord = vec2(uAtlas * aTexcoord);
+	vTextureCoord = vec2 (uAtlas * aTexCoord);
 }
+

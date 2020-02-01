@@ -40,21 +40,30 @@ uniform vec4 uLightCol[4];
 in vec2 vTexcoord;
 in vec4 vecNormal;
 in vec4 viewPos;
-//	4) implement Lambert shading model
-//	Note: test all data and inbound values before using them!
 
 //	5) set location of final color render target (location 0)
-layout(location = 0) out vec4 rtFragColor;
+layout(location = 0) out vec4 rtFragColor;	//Color target 0 FINAL SCENE COLOR
 
 //	6) declare render targets for each attribute and shading component
-out vec4 vTexcoord;
-out vec4 rtVecNormal;
-out vec4 rtViewPos;
+//out vec4 rtTexcoord; ????
 
-float lambertize(vec4 V, vec4 L, vec4 F)
+out vec4 rtViewPos;	//Color target 1
+out vec4 rtViewNormal;	//Color target 2
+out vec4 rtAtlasTexcoord; //Color target 3
+out vec4 rtDiffMap; //Color target 4
+//No color target 5, Lambert doesn't use specular
+out vec4 rtDiffTotal;	//Color target 6
+//No color target 7, Lambert doesn't use specular
+//Depth buffer?
+
+
+//	4) implement Lambert shading model
+//	Note: test all data and inbound values before using them!
+//float lambertize(vec4 V, vec4 L, vec4 F)
+float lambertize(vec4 fragNormal, vec4 lightNormal)
 {
-	vec4 fragNormal = normalize(V);
-	vec4 lightNormal = normalize(L-F);
+	//vec4 fragNormal = normalize(V);
+	//vec4 lightNormal = normalize(L-F);
 	float lambProduct = max(0.0, dot(fragNormal, lightNormal));
 	return lambProduct;
 }
@@ -64,12 +73,22 @@ void main()
 {
 	vec4 finalLightCol;
 
+	vec4 fragNorm = normalize(vecNormal);
+	vec4 lightNorms[4];
 	for(int i = 0; i < uLightCt; i++)
 	{
-		finalLightCol +=  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
+		lightNorms[i] = normalize(uLightPos[i] - viewPos);
 	}
 
-	rtFragColor = finalLightCol * texture(uTex_dm, vTextureCoord);
+
+	for(int i = 0; i < uLightCt; i++)
+	{
+		finalLightCol +=  lambertize(fragNorm, lightNorms[i]) * uLightCol[i];
+		//finalLightCol +=  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
+	}
+
+	rtFragColor = finalLightCol * texture(uTex_dm, vTexcoord);
+	//rtTexcoord = vec4(vTexcoord, 0.0, 1.0);
 
 }
 
