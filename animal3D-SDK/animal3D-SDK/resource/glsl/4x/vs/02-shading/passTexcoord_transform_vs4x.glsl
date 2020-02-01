@@ -25,6 +25,7 @@
 
 #version 410
 
+// ****TO-DO: 
 //	1) declare uniform variable for MVP matrix; see demo code for hint
 uniform mat4 uMVP;
 
@@ -44,4 +45,3 @@ void main()
 //	6) correctly transform input texture coordinate by atlas matrix
 	vTextureCoord = vec2 (uAtlas * aTexCoord);
 }
-

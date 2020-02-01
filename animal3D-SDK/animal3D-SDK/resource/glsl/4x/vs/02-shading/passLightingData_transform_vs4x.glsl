@@ -24,6 +24,8 @@
 */
 
 #version 410
+
+// ****TO-DO: 
 //	1) declare uniform variable for MV matrix; see demo code for hint
 uniform mat4 uMV;
 //	2) declare view position as outbound varying

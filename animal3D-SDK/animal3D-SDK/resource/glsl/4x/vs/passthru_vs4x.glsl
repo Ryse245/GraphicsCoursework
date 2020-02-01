@@ -18,11 +18,14 @@
 	animal3D SDK: Minimal 3D Animation Framework
 	By Daniel S. Buckstein
 	
-	passthru_vs4x.glsl
-	Pass-thru GLSL vertex shader. Outputs raw position attribute.
+	passColor_transform_instanced_vs4x.glsl
+	Transform position attribute for instance and pass color attribute down 
+		the pipeline.
 */
 
 #version 410
+
+#define MAX_INSTANCES 1024
 
 layout (location = 0) in vec4 aPosition;
 

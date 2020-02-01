@@ -26,14 +26,22 @@
 
 // ****TO-DO: 
 //	1) declare uniform variable for texture; see demo code for hints
+uniform sampler2D uTex_dm;
 //	2) declare inbound varying for texture coordinate
+in vec2 vTextureCoord;
 //	3) sample texture using texture coordinate
+
 //	4) assign sample to output color
+
+//uniform sampler2D [FIND NAME IN RENDER FILE] (uTex_dm?)
 
 out vec4 rtFragColor;
 
 void main()
 {
 	// DUMMY OUTPUT: all fragments are OPAQUE WHITE
-	rtFragColor = vec4(1.0, 1.0, 1.0, 1.0);
+	//rtFragColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+	//DEBUGGING:
+	rtFragColor = texture(uTex_dm, vTextureCoord);
 }
