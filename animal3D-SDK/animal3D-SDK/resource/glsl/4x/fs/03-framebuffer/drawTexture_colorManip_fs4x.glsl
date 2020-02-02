@@ -39,8 +39,19 @@ void main()
 {
 //	3) sample texture using texture coordinate
 	//vec4 semiFinal = (texture(uTex_dm, vTextureCoord)*((sin(float(2*uTime))+1)/2));
+	vec3 colorEdit;
 	vec4 semiFinal = texture(uTex_dm, vTextureCoord);
-	vec3 colorEdit = (semiFinal.rgb*(sin(float(2*uTime))+1)/2);
+	colorEdit = semiFinal.rgb;
+	vec2 midPoint = vec2(0.5,0.5);
+	//colorEdit = (semiFinal.rgb*(sin(float(2*uTime))+1)/2);
+
+	//if(length(abs(vTextureCoord - midPoint)) < 0.25)
+	//{
+	colorEdit.x += sin(vTextureCoord.x * 30 + float(2*uTime));
+	colorEdit.y += cos(vTextureCoord.y * 30 + float(2*uTime));
+	//}
+
+
 	// DUMMY OUTPUT: all fragments are OPAQUE LIGHT GREY
 	rtFragColor = vec4(colorEdit, semiFinal.w);
 }

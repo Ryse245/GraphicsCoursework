@@ -28,10 +28,8 @@
 //	1) declare uniform variable for texture; see demo code for hints
 uniform sampler2D uTex_dm;
 uniform double uTime;
-uniform mat4 uMVP;
 //	2) declare inbound varying for texture coordinate
 in vec2 vTextureCoord;
-layout(location = 0) in vec4 aPosition;
 //	3) modify texture coordinate in some creative way
 //	4) sample texture using modified texture coordinate
 //	5) assign sample to output color
@@ -40,10 +38,14 @@ out vec4 rtFragColor;
 
 void main()
 {
-	vec2 fucky = vec2(vTextureCoord.x, vTextureCoord.y);
+	float strength = 0.01;
+	// + (cos(float(uTime) * 10)*strength)
+	vec2 wavyGoodness = vec2(vTextureCoord.x, vTextureCoord.y);
+
+	wavyGoodness.x += sin(vTextureCoord.y * 30 + float(2*uTime))*.01;		
+	
 	// DUMMY OUTPUT: all fragments are OPAQUE DARK GREY
 	//rtFragColor = vec4(0.2, 0.2, 0.2, 1.0);
 	//gl_Position = uMVP* aPosition;
-	rtFragColor = texture(uTex_dm, fucky);
-
+	rtFragColor = texture(uTex_dm, wavyGoodness);
 }
