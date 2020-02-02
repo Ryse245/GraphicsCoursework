@@ -26,8 +26,10 @@
 
 // ****TO-DO: 
 //	1) declare uniform variable for texture; see demo code for hints
+uniform sampler2D uTex_dm;
+uniform double uTime;
 //	2) declare inbound varying for texture coordinate
-//	3) sample texture using texture coordinate
+in vec2 vTextureCoord;
 //	4) modify sample in some creative way
 //	5) assign modified sample to output color
 
@@ -35,6 +37,11 @@ out vec4 rtFragColor;
 
 void main()
 {
+//	3) sample texture using texture coordinate
+	//vec4 semiFinal = (texture(uTex_dm, vTextureCoord)*((sin(float(2*uTime))+1)/2));
+	vec4 semiFinal = texture(uTex_dm, vTextureCoord);
+	vec3 colorEdit = (semiFinal.rgb*(sin(float(2*uTime))+1)/2);
 	// DUMMY OUTPUT: all fragments are OPAQUE LIGHT GREY
-	rtFragColor = vec4(0.5, 0.5, 0.5, 1.0);
+	rtFragColor = vec4(colorEdit, semiFinal.w);
 }
+//sin(float(uTime))
