@@ -88,5 +88,6 @@ void main()
 	finalLightCol = diffuseCol + specularCol;
 
 	rtFragColor = finalLightCol;
+
 	//rtFragColor = vec4(0.0, 1.0, 0.0, 1.0);
 }

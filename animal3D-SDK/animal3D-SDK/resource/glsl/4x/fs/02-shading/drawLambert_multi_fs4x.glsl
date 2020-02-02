@@ -75,5 +75,5 @@ void main()
 	}
 
 	rtFragColor = finalLightCol * texture(uTex_dm, vTextureCoord);
-
+	//rtFragColor = vecNormal;
 }

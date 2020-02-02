@@ -57,8 +57,8 @@ void main()
 	viewPos = uMV * aPosition;
 //	5) correctly transform view position by P matrix to get final position
 	gl_Position =  uP * viewPos;
-//	9) correctly transform input normal by MV normal matrix
-	vecNormal = vec4(uMV_nrm * normal);
+//	9) correctly transform input normal by MV normal matrix>>
+	vecNormal = uMV_nrm * normal;
 		
 	vTextureCoord = vec2 (uAtlas * aTexCoord);
 }

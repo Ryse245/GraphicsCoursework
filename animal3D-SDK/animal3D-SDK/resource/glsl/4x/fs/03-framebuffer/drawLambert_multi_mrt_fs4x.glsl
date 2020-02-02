@@ -37,7 +37,7 @@ uniform vec4 uLightPos[4];
 uniform vec4 uLightCol[4];
 
 //	3) declare inbound varying data
-in vec2 vTexcoord;
+in vec2 vTextureCoord;
 in vec4 vecNormal;
 in vec4 viewPos;
 
@@ -45,14 +45,13 @@ in vec4 viewPos;
 layout(location = 0) out vec4 rtFragColor;	//Color target 0 FINAL SCENE COLOR
 
 //	6) declare render targets for each attribute and shading component
-//out vec4 rtTexcoord; ????
 
-out vec4 rtViewPos;	//Color target 1
-out vec4 rtViewNormal;	//Color target 2
-out vec4 rtAtlasTexcoord; //Color target 3
-out vec4 rtDiffMap; //Color target 4
+layout(location = 1) out vec4 rtViewPos;	//Color target 1
+layout(location = 2) out vec4 rtViewNormal;	//Color target 2
+layout(location = 3) out vec4 rtTexcoord; //Color target 3
+layout(location = 4) out vec4 rtDiffMap; //Color target 4
 //No color target 5, Lambert doesn't use specular
-out vec4 rtDiffTotal;	//Color target 6
+layout(location = 6) out vec4 rtDiffTotal;	//Color target 6
 //No color target 7, Lambert doesn't use specular
 //Depth buffer?
 
@@ -87,8 +86,13 @@ void main()
 		//finalLightCol +=  lambertize(vecNormal, uLightPos[i], viewPos) * uLightCol[i];
 	}
 
-	rtFragColor = finalLightCol * texture(uTex_dm, vTexcoord);
-	//rtTexcoord = vec4(vTexcoord, 0.0, 1.0);
+	rtFragColor = finalLightCol * texture(uTex_dm, vTextureCoord);
+	rtViewPos = viewPos;
+	rtViewNormal = vec4(vec3(vecNormal),1.0);
+	rtTexcoord = vec4(vTextureCoord, 0.0, 1.0);
+	rtDiffMap = texture(uTex_dm, vTextureCoord);
+
+	rtDiffTotal = finalLightCol;
 
 }
 
