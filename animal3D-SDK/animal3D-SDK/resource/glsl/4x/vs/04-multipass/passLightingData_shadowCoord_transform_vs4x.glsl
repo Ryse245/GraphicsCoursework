@@ -30,7 +30,7 @@
 //	0) copy previous lighting data vertex shader	DONE
 //	1) declare MVPB matrix for light	DONE
 //	2) declare varying for shadow coordinate	DONE
-//	3) calculate and pass shadow coordinate	DONE??
+//	3) calculate and pass shadow coordinate	DONE
 uniform mat4 uMV;
 uniform mat4 uMVPB_other;
 

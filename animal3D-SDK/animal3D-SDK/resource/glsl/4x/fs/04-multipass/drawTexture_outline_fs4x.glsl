@@ -25,7 +25,7 @@
 #version 410
 
 // ****TO-DO: 
-//	0) copy existing texturing shader	DONE?
+//	0) copy existing texturing shader	DONE
 //	1) implement outline algorithm - see render code for uniform hints
 
 uniform sampler2D uTex_dm;
@@ -42,8 +42,22 @@ layout(location = 3) out vec4 rtTexcoord;
 void main()
 {
 	vec4 sampleTex_dm = texture(uTex_dm, vTextureCoord);
-	//rtFragColor = sampleTex_dm;
-	rtFragColor = texture(uTex_dm, vTextureCoord);
+	//vec4 big = texture(uTex_dm, vTextureCoord + uAxis);
+
+
+	vec4 bigger = texture(uTex_dm, normalize(vTextureCoord) * uSize);
+	//rtFragColor = bigger;
+
+	//rtFragColor = bigger + sampleTex_dm - (bigger*sampleTex_dm);
+
+	rtFragColor = sampleTex_dm;
+	
+	//rtFragColor = vec4(uSize,0,0);
+	//2 options
+	//1. Create slightly larger object, display on top
+	//2. If normal of position is perpendicular to camera
+	
+
 
 	rtTexcoord = vec4(vTextureCoord, 0.0, 1.0);
 
