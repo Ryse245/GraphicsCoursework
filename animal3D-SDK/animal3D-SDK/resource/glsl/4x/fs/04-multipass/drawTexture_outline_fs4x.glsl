@@ -33,6 +33,7 @@ uniform vec4 uColor;
 uniform vec2 uAxis;
 uniform vec2 uSize;
 in vec2 vTextureCoord;
+in float vDotProd;
 
 layout(location = 0) out vec4 rtFragColor;
 
@@ -49,8 +50,14 @@ void main()
 	//rtFragColor = bigger;
 
 	//rtFragColor = bigger + sampleTex_dm - (bigger*sampleTex_dm);
-
-	rtFragColor = sampleTex_dm;
+	if(vDotProd == 0)
+	{
+		rtFragColor.rgb = uColor.rgb;
+	}
+	else
+	{
+		rtFragColor = sampleTex_dm;		
+	}
 	
 	//rtFragColor = vec4(uSize,0,0);
 	//2 options
