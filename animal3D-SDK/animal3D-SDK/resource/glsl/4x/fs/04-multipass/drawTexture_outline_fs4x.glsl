@@ -24,7 +24,7 @@
 
 #version 410
 
-//https://computergraphics.stackexchange.com/questions/3646/opengl-glsl-sobel-edge-detection-filter and https://en.wikipedia.org/wiki/Sobel_operator were used to figure out the sobel algorithm
+//https://computergraphics.stackexchange.com/questions/3646/opengl-glsl-sobel-edge-detection-filter and https://en.wikipedia.org/wiki/Sobel_operator were used to figure out and implement the sobel algorithm
 // ****TO-DO: 
 //	0) copy existing texturing shader	DONE
 //	1) implement outline algorithm - see render code for uniform hints
@@ -51,7 +51,6 @@ mat3 sobelY = mat3(
 void main()
 {
 	vec4 sampleTex_dm = texture(uTex_dm, vTextureCoord);
-	//vec4 big = texture(uTex_dm, vTextureCoord + uAxis);
 
 	mat3 lengthMat;
 	float xProd;
@@ -65,9 +64,12 @@ void main()
 			lengthMat[i][j] = length(samples);
 		}
 	}
-
-	xProd = dot(sobelX[0], lengthMat[0]) + dot(sobelX[1], lengthMat[1]) + dot(sobelX[2], lengthMat[2]);
-	yProd = dot(sobelY[0], lengthMat[0]) + dot(sobelY[1], lengthMat[1]) + dot(sobelY[2], lengthMat[2]);
+	
+	for(int k = 0; k < 3; k++)
+	{
+		xProd += dot(sobelX[k], lengthMat[k]);	//Combine dot products of x and y from sobel matrices and length matrix
+		yProd += dot(sobelY[k], lengthMat[k]);
+	}
 
 	float allProd = sqrt((xProd * xProd) + (yProd * yProd));
 
@@ -81,6 +83,7 @@ void main()
 	{
 		rtFragColor.rgb = uColor.rgb;
 	}
+
 	else
 	{
 		rtFragColor = sampleTex_dm;
