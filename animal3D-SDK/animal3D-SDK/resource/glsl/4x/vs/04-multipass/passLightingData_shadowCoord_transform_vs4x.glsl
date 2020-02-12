@@ -49,13 +49,14 @@ out vec4 vecNormal;
 layout (location = 8) in vec4 aTexCoord; 
 uniform mat4 uAtlas;
 out vec2 vTextureCoord;
-out float vDotProd;
+//out float vDotProd;
 
 
 layout (location = 0) in vec4 aPosition;
 
 void main()
 {
+	vec4 upVec = vec4(0.0,1.0,0.0,0.0);
 	viewPos = uMV * aPosition;
 
 	gl_Position =  uP * viewPos;
@@ -66,6 +67,6 @@ void main()
 
 	vShadowCoord = uMVPB_other * aPosition;
 
-	//vDotProd = dot(normalize(up vector - aPosition), normalize(aPosition-viewPos));
+	//vDotProd = dot(normalize(upVec - aPosition), normalize(aPosition-viewPos));
 	//Calculate dot product of vertex and camera normal, send to FS?
 }

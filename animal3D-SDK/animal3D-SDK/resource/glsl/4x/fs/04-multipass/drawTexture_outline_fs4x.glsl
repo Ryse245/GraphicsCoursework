@@ -24,47 +24,74 @@
 
 #version 410
 
+//https://computergraphics.stackexchange.com/questions/3646/opengl-glsl-sobel-edge-detection-filter and https://en.wikipedia.org/wiki/Sobel_operator were used to figure out the sobel algorithm
 // ****TO-DO: 
 //	0) copy existing texturing shader	DONE
 //	1) implement outline algorithm - see render code for uniform hints
 
 uniform sampler2D uTex_dm;
 uniform vec4 uColor;
-uniform vec2 uAxis;
-uniform vec2 uSize;
 in vec2 vTextureCoord;
-in float vDotProd;
+//in float vDotProd;
 
 layout(location = 0) out vec4 rtFragColor;
 
 layout(location = 3) out vec4 rtTexcoord;
 
+mat3 sobelX = mat3(
+	1.0, 2.0, 1.0,
+	0.0, 0.0, 0.0,
+	-1.0,-2.0, -1.0);
+
+mat3 sobelY = mat3(
+	1.0, 0.0, -1.0,
+	2.0, 0.0, -2.0,
+	1.0, 0.0, -1.0);
 
 void main()
 {
 	vec4 sampleTex_dm = texture(uTex_dm, vTextureCoord);
 	//vec4 big = texture(uTex_dm, vTextureCoord + uAxis);
 
+	mat3 lengthMat;
+	float xProd;
+	float yProd;
 
-	vec4 bigger = texture(uTex_dm, normalize(vTextureCoord) * uSize);
+	for(int i = 0; i < 3; i++)
+	{
+		for(int j = 0; j < 3; j++)
+		{
+			vec3 samples = texelFetch(uTex_dm, ivec2(gl_FragCoord) + ivec2(i-1,j-1), 0).rgb;
+			lengthMat[i][j] = length(samples);
+		}
+	}
+
+	xProd = dot(sobelX[0], lengthMat[0]) + dot(sobelX[1], lengthMat[1]) + dot(sobelX[2], lengthMat[2]);
+	yProd = dot(sobelY[0], lengthMat[0]) + dot(sobelY[1], lengthMat[1]) + dot(sobelY[2], lengthMat[2]);
+
+	float allProd = sqrt((xProd * xProd) + (yProd * yProd));
+
+
+	//vec4 bigger = texture(uTex_dm, normalize(vTextureCoord) * uSize);
 	//rtFragColor = bigger;
 
 	//rtFragColor = bigger + sampleTex_dm - (bigger*sampleTex_dm);
-	if(vDotProd == 0)
+	
+	if(allProd > 0.75)
 	{
 		rtFragColor.rgb = uColor.rgb;
 	}
 	else
 	{
-		rtFragColor = sampleTex_dm;		
+		rtFragColor = sampleTex_dm;
 	}
+	//rtFragColor = vec4(sampleTex_dm.rgb - vec3(allProd) ,1.0);	
 	
 	//rtFragColor = vec4(uSize,0,0);
 	//2 options
 	//1. Create slightly larger object, display on top
 	//2. If normal of position is perpendicular to camera
 	
-
 
 	rtTexcoord = vec4(vTextureCoord, 0.0, 1.0);
 
