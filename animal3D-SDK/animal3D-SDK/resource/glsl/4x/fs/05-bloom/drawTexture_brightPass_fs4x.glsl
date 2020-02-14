@@ -34,6 +34,7 @@ uniform sampler2D uImage00;
 layout (location = 0) out vec4 rtFragColor;
 out vec4 rtLuminence;
 
+in vec2 vTextureCoord;
 //1
 float relLuminance(vec3 c)
 {
@@ -42,6 +43,8 @@ float relLuminance(vec3 c)
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE CYAN
-	rtFragColor = vec4(0.0, 1.0, 1.0, 1.0);
+	vec4 color = texture(uImage00,vTextureCoord);
+	float luminance = relLuminance(color.rgb);
+	//bright pass function to make tone map, multiply tone map by input image
+	rtFragColor = color;
 }
