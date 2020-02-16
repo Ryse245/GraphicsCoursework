@@ -30,9 +30,9 @@
 //	2) use brightness to implement tone mapping or just filter out dark areas
 
 uniform sampler2D uImage00;
-
+uniform sampler2D uTex_dm;
 layout (location = 0) out vec4 rtFragColor;
-out vec4 rtLuminence;
+layout (location = 1) out vec4 rtLuminence;
 
 in vec2 vTextureCoord;
 //1
@@ -41,10 +41,14 @@ float relLuminance(vec3 c)
 	return(0.2126*c.r + 0.7152*c.g + 0.0722*c.b);
 }
 
+float gamma = 2.2;
 void main()
 {
-	vec4 color = texture(uImage00,vTextureCoord);
+	vec3 color = texture(uImage00,vTextureCoord).rgb;
+	//color = vec4(1.0,0.0,0.0,1.0);
 	float luminance = relLuminance(color.rgb);
 	//bright pass function to make tone map, multiply tone map by input image
-	rtFragColor = color;
+	
+	rtFragColor = vec4(color,1.0);
+	rtLuminence = vec4(vec3(luminance),1.0);
 }
