@@ -283,11 +283,14 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 		//	-> 2.1e: uncomment half-size framebuffers
 		{ demoState->fbo_post_c16_2fr + 0, 0, },
 		{ demoState->fbo_post_c16_2fr + 1, 0, },
+		{ demoState->fbo_post_c16_2fr + 2, 0, },
+
 
 		//	-> 4.1d: add smaller framebuffers for reading additional passes (6 lines)
 		
 		{ demoState->fbo_post_c16_4fr + 0, 0, },
 		{ demoState->fbo_post_c16_4fr + 1, 0, },
+		{ demoState->fbo_post_c16_4fr + 2, 0, },
 
 
 		{ demoState->fbo_post_c16_8fr + 0, 0, },
