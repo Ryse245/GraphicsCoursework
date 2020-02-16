@@ -32,6 +32,7 @@
 
 uniform sampler2D uImage00;
 uniform vec2 uAxis;
+uniform vec2 uSize;
 layout (location = 0) out vec4 rtFragColor;
 
 in vec2 vTextureCoord;
@@ -45,9 +46,9 @@ vec4 blurGaussian0(in sampler2D img, in vec2 center, in vec2 dir) //pascal 0th r
 vec4 blurGaussian2(in sampler2D img, in vec2 center, in vec2 dir) //pascal 2nd row
 {
 	vec4 c = vec4(0.0);
-	c+= texture(img, center-dir);	//1 on sides of pascal triangle
+	c+= texture(img, center-uSize*dir);	//1 on sides of pascal triangle
 	c+= texture(img, center) * 2.0;	//2 is middle of 2nd row of pascal's triangle
-	c+= texture(img, center+dir);	//1 on sides of pascal triangle
+	c+= texture(img, center+uSize*dir);	//1 on sides of pascal triangle
 
 	//for more distant nums in pascal triangle, multiply dir? (ex. center +/- (dir*2.0))?
 	
@@ -55,9 +56,43 @@ vec4 blurGaussian2(in sampler2D img, in vec2 center, in vec2 dir) //pascal 2nd r
 	return (c*0.25);	//c * 0.25 = c/4, 4 is added values from pascal triangle row (2+1+1)
 }
 
+vec4 blurGaussian4(in sampler2D img, in vec2 center, in vec2 dir)
+{
+	vec4 color = vec4(0.0);
+	color+= texture(img, center-uSize*dir*2.0);	//1 on sides of pascal triangle
+
+	color+= texture(img, center-uSize*dir)*4.0;	//4 on sides of pascal triangle
+
+	color+= texture(img, center)*6.0;	//6 on middle of pascal triangle
+
+	color+= texture(img, center+uSize*dir)*4.0;	//4 on sides of pascal triangle
+
+	color+= texture(img, center+uSize*dir*2.0);	//1 on sides of pascal triangle
+	return color*0.0625;
+}
+
+vec4 blurGaussian6(in sampler2D img, in vec2 center, in vec2 dir)
+{
+	vec4 color = vec4(0.0);
+	color+= texture(img, center-(uSize*3.0)*dir);	//1 on sides of pascal triangle
+
+	color+= texture(img, center-(uSize*2.0)*dir)*6.0;	//1 on sides of pascal triangle
+
+	color+= texture(img, center-uSize*dir)*15.0;	//4 on sides of pascal triangle
+
+	color+= texture(img, center)*20.0;	//6 on middle of pascal triangle
+
+	color+= texture(img, center+uSize*dir)*15.0;	//4 on sides of pascal triangle
+
+	color+= texture(img, center+(uSize*2.0)*dir)*6.0;	//1 on sides of pascal triangle
+
+	color+= texture(img, center+(uSize*3.0)*dir);	//1 on sides of pascal triangle
+	return color*0.015625;
+}
+
 void main()
 {
-	rtFragColor = blurGaussian2(uImage00,vTextureCoord,uAxis);
+	rtFragColor = blurGaussian6(uImage00,vTextureCoord,uAxis);
 }
 
 //TIP FOR BONUS: implement multiple blur/bright passes
