@@ -31,8 +31,10 @@
 //	3) sample texture using Gaussian blur function and output result
 
 uniform sampler2D uImage00;
-
+uniform vec2 uAxis;
 layout (location = 0) out vec4 rtFragColor;
+
+in vec2 vTextureCoord;
 
 //center = center pixel, dir = next/prev pixel
 vec4 blurGaussian0(in sampler2D img, in vec2 center, in vec2 dir) //pascal 0th row
@@ -43,9 +45,9 @@ vec4 blurGaussian0(in sampler2D img, in vec2 center, in vec2 dir) //pascal 0th r
 vec4 blurGaussian2(in sampler2D img, in vec2 center, in vec2 dir) //pascal 2nd row
 {
 	vec4 c = vec4(0.0);
+	c+= texture(img, center-dir);	//1 on sides of pascal triangle
 	c+= texture(img, center) * 2.0;	//2 is middle of 2nd row of pascal's triangle
 	c+= texture(img, center+dir);	//1 on sides of pascal triangle
-	c+= texture(img, center-dir);	//1 on sides of pascal triangle
 
 	//for more distant nums in pascal triangle, multiply dir? (ex. center +/- (dir*2.0))?
 	
@@ -55,8 +57,7 @@ vec4 blurGaussian2(in sampler2D img, in vec2 center, in vec2 dir) //pascal 2nd r
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE MAGENTA
-	rtFragColor = vec4(1.0, 0.0, 1.0, 1.0);
+	rtFragColor = blurGaussian2(uImage00,vTextureCoord,uAxis);
 }
 
 //TIP FOR BONUS: implement multiple blur/bright passes

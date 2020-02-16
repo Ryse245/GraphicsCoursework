@@ -30,7 +30,7 @@
 //	2) use brightness to implement tone mapping or just filter out dark areas
 
 uniform sampler2D uImage00;
-uniform sampler2D uTex_dm;
+
 layout (location = 0) out vec4 rtFragColor;
 layout (location = 1) out vec4 rtLuminence;
 
