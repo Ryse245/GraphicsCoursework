@@ -41,14 +41,12 @@ float relLuminance(vec3 c)
 	return(0.2126*c.r + 0.7152*c.g + 0.0722*c.b);
 }
 
-float gamma = 2.2;
 void main()
 {
 	vec3 color = texture(uImage00,vTextureCoord).rgb;
 	//color = vec4(1.0,0.0,0.0,1.0);
 	float luminance = relLuminance(color.rgb);
-	//bright pass function to make tone map, multiply tone map by input image
-	
-	rtFragColor = vec4(color,1.0);
+
+	rtFragColor = vec4(color*luminance*luminance,1.0);//prob not right
 	rtLuminence = vec4(vec3(luminance),1.0);
 }
