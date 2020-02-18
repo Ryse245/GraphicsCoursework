@@ -657,13 +657,13 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	// 06-deferred programs: 
 	// ****TO-DO: 
 	//	-> 2.1a: uncomment g-buffer program
-	/*
+	///*
 	// draw lighting data as g-buffers
 	currentDemoProg = demoState->prog_drawLightingData;
 	a3shaderProgramCreate(currentDemoProg->program, "prog:draw-lightingdata");
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passLightingData_transform_bias_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawLightingData_fs->shader);
-	*/
+	//*/
 	// ****TO-DO: 
 	//	-> 3.1a: uncomment deferred shading composite program
 	/*
