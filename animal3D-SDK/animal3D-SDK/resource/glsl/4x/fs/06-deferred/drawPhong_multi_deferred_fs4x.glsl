@@ -30,7 +30,7 @@
 // ****TO-DO: 
 //	0) copy original forward Phong shader
 //	1) declare g-buffer textures as uniform samplers
-//	2) declare light data as uniform block
+//	2) declare light data as uniform block FALSE, USE ORIGINAL PHONG SHADER (COPY PHONG SHADER, REPLACE VARYING INPUTS WITH TEXTURE SAMPLES) (READ IDLE-RENDER TO FIND TEXTURES)
 //	3) replace geometric information normally received from fragment shader 
 //		with samples from respective g-buffer textures; use to compute lighting
 //			-> position calculated using reverse perspective divide; requires 

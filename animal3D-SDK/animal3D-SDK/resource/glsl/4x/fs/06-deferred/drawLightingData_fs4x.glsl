@@ -29,6 +29,12 @@
 //	2) declare render targets to display attribute data
 //	3) copy attribute data from varying to respective render targets, 
 //		transforming data accordingly
+in vbLightingData {
+	vec4 vViewPosition;
+	vec4 vViewNormal;
+	vec4 vTexcoord;
+	vec4 vBiasedClipCoord;
+};
 
 layout (location = 1) out vec4 rtViewPosition;
 layout (location = 2) out vec4 rtViewNormal;

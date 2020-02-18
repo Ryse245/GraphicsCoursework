@@ -34,6 +34,7 @@ layout (location = 8) in vec4 aTexcoord;
 
 uniform mat4 uMV, uP, uPB, uMV_nrm, uAtlas;
 
+//For reading in, copy and switch "out" to "in"
 out vbLightingData {
 	vec4 vViewPosition;
 	vec4 vViewNormal;

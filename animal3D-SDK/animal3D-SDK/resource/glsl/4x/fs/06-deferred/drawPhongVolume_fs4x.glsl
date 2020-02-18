@@ -39,6 +39,21 @@
 in vec4 vBiasedClipCoord;
 flat in int vInstanceID;
 
+// simple point light
+struct sPointLight
+{
+	vec4 worldPos;					// position in world space
+	vec4 viewPos;					// position in viewer space
+	vec4 color;						// RGB color with padding
+	float radius;					// radius (distance of effect from center)
+	float radiusInvSq;				// radius inverse squared (attenuation factor)
+	float pad[2];					// padding
+};
+
+uniform ubPointLight {
+	sPointLight uLight[MAX_LIGHTS];
+};
+
 layout (location = 6) out vec4 rtDiffuseLight;
 layout (location = 7) out vec4 rtSpecularLight;
 
