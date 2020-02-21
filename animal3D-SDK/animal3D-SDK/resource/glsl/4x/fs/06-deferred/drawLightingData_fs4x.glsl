@@ -42,8 +42,9 @@ layout (location = 3) out vec4 rtAtlasTexcoord;
 
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE RED, GREEN AND BLUE
-	rtViewPosition = vec4(1.0, 0.0, 0.0, 1.0);
-	rtViewNormal = vec4(0.0, 1.0, 0.0, 1.0);
-	rtAtlasTexcoord = vec4(0.0, 0.0, 1.0, 1.0);
+	rtViewPosition = vBiasedClipCoord/vBiasedClipCoord.w; //perspective divide for 0-1 range. Other way view = (uPBinv *biasedClipCoord) /biasClipCoord.w
+	//rtViewPosition = vViewPosition;
+	rtViewNormal = (vViewNormal*0.5)+0.5;//*.5 + .5 for 0-1 range,  other way *2 -1
+	rtAtlasTexcoord = vTexcoord;
 }
+//deferred samples textures instead of varyings
