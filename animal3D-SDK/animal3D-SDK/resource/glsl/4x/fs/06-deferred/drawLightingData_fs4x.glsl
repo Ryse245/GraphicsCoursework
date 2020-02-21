@@ -44,7 +44,7 @@ void main()
 {
 	rtViewPosition = vBiasedClipCoord/vBiasedClipCoord.w; //perspective divide for 0-1 range. Other way view = (uPBinv *biasedClipCoord) /biasClipCoord.w
 	//rtViewPosition = vViewPosition;
-	rtViewNormal = (vViewNormal*0.5)+0.5;//*.5 + .5 for 0-1 range,  other way *2 -1
+	rtViewNormal = (normalize(vViewNormal)*0.5)+0.5;//*.5 + .5 for 0-1 range,  other way *2 -1
 	rtAtlasTexcoord = vTexcoord;
 }
 //deferred samples textures instead of varyings
