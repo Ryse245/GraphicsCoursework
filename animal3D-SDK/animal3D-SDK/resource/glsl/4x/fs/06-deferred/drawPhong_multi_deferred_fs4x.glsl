@@ -40,18 +40,96 @@
 
 in vec4 vTexcoord;
 
+uniform sampler2D uImage01;	//View position
+uniform sampler2D uImage02;	//View normal
+uniform sampler2D uImage03;	//Atlas texcoord
+
+
 layout (location = 0) out vec4 rtFragColor;
+layout (location = 1) out vec4 rtViewPosition;
+layout (location = 2) out vec4 rtViewNormal;
+layout (location = 3) out vec4 rtAtlasTexcoord;
 layout (location = 4) out vec4 rtDiffuseMapSample;
 layout (location = 5) out vec4 rtSpecularMapSample;
 layout (location = 6) out vec4 rtDiffuseLightTotal;
 layout (location = 7) out vec4 rtSpecularLightTotal;
 
+
+
+uniform sampler2D uTex_dm;
+uniform sampler2D uTex_sm;
+uniform mat4 uPB_inv;
+
+uniform int uLightCt;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
+
+
+float shininess = 25.0;
+
+float lambertize(vec4 V, vec4 L, vec4 F)
+{
+	vec4 fragNormal = normalize(V);
+	vec4 lightNormal = normalize(L-F);
+	float lambProduct = max(0.0, dot(fragNormal, lightNormal));
+	return lambProduct;
+}
+
+float specularHighlight(vec4 V, vec4 L, vec4 F)
+{
+	vec4 fragNormal = normalize(V);
+	vec4 lightNormal = normalize(L-F);
+	vec4 reflectVec = reflect(-lightNormal, fragNormal);
+	vec4 viewVec = normalize(-F);
+	float specProduct = max(0.0,dot(reflectVec,viewVec));
+	specProduct = pow(specProduct,shininess);
+	return specProduct;
+}
+
+
 void main()
 {
-	// DUMMY OUTPUT: all fragments are OPAQUE CYAN (and others)
-	rtFragColor = vec4(0.0, 1.0, 1.0, 1.0);
-	rtDiffuseMapSample = vec4(0.0, 0.0, 1.0, 1.0);
-	rtSpecularMapSample = vec4(0.0, 1.0, 0.0, 1.0);
-	rtDiffuseLightTotal = vec4(1.0, 0.0, 1.0, 1.0);
-	rtSpecularLightTotal = vec4(1.0, 1.0, 0.0, 1.0);
+	vec4 viewPos = texture(uImage01, vTexcoord.xy);
+	vec4 viewNorm = texture(uImage02, vTexcoord.xy);
+	vec4 atlas = texture(uImage03, vTexcoord.xy);
+
+	viewPos = uPB_inv * viewPos;
+	viewPos = viewPos/viewPos.w;
+	viewNorm = (viewNorm*2.0) - 1.0;
+	viewNorm.w = 1.0;
+
+	vec4 finalLightCol;
+	vec4 diffuseCol;
+	vec4 specularCol;
+
+	for(int i = 0; i < uLightCt; i++)
+	{
+		//Diffuse
+		diffuseCol +=  lambertize(viewNorm, uLightPos[i], viewPos) * uLightCol[i];
+		//Specular
+		specularCol +=  specularHighlight(viewNorm, uLightPos[i], viewPos) * uLightCol[i];
+	}
+
+	rtDiffuseLightTotal = diffuseCol;
+	rtSpecularLightTotal = specularCol;
+
+	diffuseCol = diffuseCol * texture(uTex_dm, atlas.xy);
+	//diffuseCol.w = 1.0;
+	
+	specularCol = specularCol * texture(uTex_sm, atlas.xy);
+	//specularCol.w = 1.0;
+
+	//add diffuse and specular for phong shading
+	finalLightCol = diffuseCol + specularCol;
+
+	rtFragColor = finalLightCol;
+	rtDiffuseMapSample = texture(uTex_dm, atlas.xy);
+	//rtDiffuseMapSample.w = 1.0;
+	rtSpecularMapSample = texture(uTex_sm, atlas.xy);
+	//rtSpecularMapSample.w = 1.0;
+
+	
+	rtViewPosition = viewPos;
+	rtViewNormal = viewNorm;
+	rtAtlasTexcoord = atlas;
 }
