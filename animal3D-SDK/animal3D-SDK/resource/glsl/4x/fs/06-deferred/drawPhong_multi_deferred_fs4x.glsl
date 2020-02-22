@@ -44,6 +44,13 @@ uniform sampler2D uImage01;	//View position
 uniform sampler2D uImage02;	//View normal
 uniform sampler2D uImage03;	//Atlas texcoord
 
+uniform sampler2D uImage04;
+uniform sampler2D uImage05;
+uniform mat4 uPB_inv;
+
+uniform int uLightCt;
+uniform vec4 uLightPos[4];
+uniform vec4 uLightCol[4];
 
 layout (location = 0) out vec4 rtFragColor;
 layout (location = 1) out vec4 rtViewPosition;
@@ -53,16 +60,6 @@ layout (location = 4) out vec4 rtDiffuseMapSample;
 layout (location = 5) out vec4 rtSpecularMapSample;
 layout (location = 6) out vec4 rtDiffuseLightTotal;
 layout (location = 7) out vec4 rtSpecularLightTotal;
-
-
-
-uniform sampler2D uTex_dm;
-uniform sampler2D uTex_sm;
-uniform mat4 uPB_inv;
-
-uniform int uLightCt;
-uniform vec4 uLightPos[4];
-uniform vec4 uLightCol[4];
 
 
 float shininess = 25.0;
@@ -113,19 +110,19 @@ void main()
 	rtDiffuseLightTotal = diffuseCol;
 	rtSpecularLightTotal = specularCol;
 
-	diffuseCol = diffuseCol * texture(uTex_dm, atlas.xy);
+	diffuseCol = diffuseCol * texture(uImage04, atlas.xy);
 	//diffuseCol.w = 1.0;
 	
-	specularCol = specularCol * texture(uTex_sm, atlas.xy);
+	specularCol = specularCol * texture(uImage05, atlas.xy);
 	//specularCol.w = 1.0;
 
 	//add diffuse and specular for phong shading
 	finalLightCol = diffuseCol + specularCol;
 
 	rtFragColor = finalLightCol;
-	rtDiffuseMapSample = texture(uTex_dm, atlas.xy);
+	rtDiffuseMapSample = texture(uImage04, atlas.xy);
 	//rtDiffuseMapSample.w = 1.0;
-	rtSpecularMapSample = texture(uTex_sm, atlas.xy);
+	rtSpecularMapSample = texture(uImage05, atlas.xy);
 	//rtSpecularMapSample.w = 1.0;
 
 	
