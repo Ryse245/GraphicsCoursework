@@ -92,7 +92,7 @@ void main()
 	vec4 viewNorm = texture(uImage02, vTexcoord.xy);
 	vec4 atlas = texture(uImage03, vTexcoord.xy);
 
-	viewPos = uPB_inv * viewPos * depth;//use depth somehow idk bro
+	viewPos = uPB_inv*viewPos;//use depth somehow idk bro
 	viewPos /= viewPos.w;
 	viewNorm = (viewNorm*2.0) - 1.0;
 	//viewNorm.w = 1.0;
