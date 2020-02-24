@@ -54,8 +54,6 @@ uniform ubPointLight {
 	sPointLight uLight[MAX_LIGHTS];
 };
 
-//poopoopeepee lol
-
 in vec4 vTexcoord;
 
 uniform sampler2D uImage00;
@@ -64,9 +62,10 @@ uniform sampler2D uImage02;	//View normal
 
 uniform mat4 uPB_inv;
 
-uniform int uLightCt;
+/*uniform int uLightCt;
 uniform vec4 uLightPos[4];
 uniform vec4 uLightCol[4];
+*/
 
 layout(location = 6) out vec4 rtDiffuseLight;
 layout(location = 7) out vec4 rtSpecularLight;
@@ -96,13 +95,12 @@ float specularHighlight(vec4 V, vec4 L, vec4 F)
 
 void main()
 {
-	vec4 viewPos = texture(uImage01, vTexcoord.xy);
-	vec4 depth = texture(uImage00, vTexcoord.xy);
-	vec4 viewNorm = texture(uImage02, vTexcoord.xy);
-	vec4 atlas = texture(uImage03, vTexcoord.xy);
+	vec4 viewPosition = texture(uImage01, vBiasedClipCoord.xy);
+	vec4 depth = texture(uImage00, vBiasedClipCoord.xy);
+	vec4 viewNorm = texture(uImage02, vBiasedClipCoord.xy);
 
-	viewPos = uPB_inv * viewPos;//use depth somehow idk bro
-	viewPos /= viewPos.w;
+	viewPosition = (uPB_inv * vBiasedClipCoord)/vBiasedClipCoord.w;//use depth somehow idk bro
+	//viewPos /= viewPos.w;
 	viewNorm = (viewNorm * 2.0) - 1.0;
 	//viewNorm.w = 1.0;
 
@@ -110,38 +108,28 @@ void main()
 	vec4 diffuseCol;
 	vec4 specularCol;
 
-	for (int i = 0; i < uLightCt; i++)
-	{
+	//for (int i = 0; i < uLightCt; i++)
+	//{
 		//Diffuse
-		diffuseCol += lambertize(viewNorm, uLightPos[i], viewPos) * uLightCol[i];
+		diffuseCol += lambertize(viewNorm, uLight[vInstanceID].worldPos , viewPosition) * uLight[vInstanceID].color;//uLightPos[vInstanceID], uLightCol[vInstanceID
 		//Specular
-		specularCol += specularHighlight(viewNorm, uLightPos[i], viewPos) * uLightCol[i];
-	}
+		specularCol += specularHighlight(viewNorm,uLight[vInstanceID].worldPos , viewPosition) * uLight[vInstanceID].color;
+	//}
 
 	diffuseCol.w = 1.0;
-	rtDiffuseLightTotal = diffuseCol;
+	rtDiffuseLight = diffuseCol;
 
 	specularCol.w = 1.0;
-	rtSpecularLightTotal = specularCol;
-
+	rtSpecularLight = specularCol;
+	/*
 	diffuseCol = diffuseCol * texture(uImage04, atlas.xy);
 	diffuseCol.w = 1.0;
 
 	specularCol = specularCol * texture(uImage05, atlas.xy);
 	specularCol.w = 1.0;
-
+	*/
 	//add diffuse and specular for phong shading
-	finalLightCol = diffuseCol + specularCol;
-	finalLightCol.w = 1.0;
+	//finalLightCol = diffuseCol + specularCol;
+	//finalLightCol.w = 1.0;
 
-	rtFragColor = finalLightCol * texture(uImage00, atlas.xy);
-	rtDiffuseMapSample = texture(uImage04, atlas.xy);
-	rtDiffuseMapSample.w = 1.0;
-	rtSpecularMapSample = texture(uImage05, atlas.xy);
-	rtSpecularMapSample.w = 1.0;
-
-
-	rtViewPosition = viewPos;
-	rtViewNormal = vec4(viewNorm.rgb, 1.0);
-	rtAtlasTexcoord = atlas;
 }
