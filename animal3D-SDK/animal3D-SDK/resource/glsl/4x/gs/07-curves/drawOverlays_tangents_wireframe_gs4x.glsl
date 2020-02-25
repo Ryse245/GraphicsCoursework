@@ -41,7 +41,44 @@
 //	6) draw tangent bases
 //	7) draw wireframe
 
+//1
+layout (triangles) in;
+
+//2	From fs 07 folder shader "PassTangentBasis"
+in vbVertexData {
+	mat4 vTangentBasis_view;
+	vec4 vTexcoord_atlas;
+	flat int vVertexID, vInstanceID, vModelID;
+} vVertexData[];	//3 because triangle input
+
+//Points:1
+//Lines:2
+//Triangles:3
+//Line Adgasency?:4
+//Triangle Adgasency?:5?
+
+//4
+layout (line_strip, max_vertices = MAX_VERTICES) out;
+
+//5
+out vec4 vColor;
+
+//7
+void drawWireFrame()
+{
+	vColor = vec4(1.0,0.5,0.0,1.0);
+	gl_Position = gl_in[0].gl_Position;
+	EmitVertex();
+	gl_Position = gl_in[1].gl_Position;
+	EmitVertex();
+	gl_Position = gl_in[2].gl_Position;
+	EmitVertex();
+	gl_Position = gl_in[0].gl_Position;
+	EmitVertex();
+	EndPrimitive();
+}
+
 void main()
 {
-	
+	drawWireFrame();
 }
