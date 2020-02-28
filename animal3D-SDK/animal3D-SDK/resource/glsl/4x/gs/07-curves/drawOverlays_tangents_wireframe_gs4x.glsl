@@ -51,11 +51,15 @@ in vbVertexData {
 	flat int vVertexID, vInstanceID, vModelID;
 } vVertexData[];	//3 because triangle input
 
+//3
+uniform mat4 uP;
+uniform float uSize;
+
 //Points:1
 //Lines:2
 //Triangles:3
-//Line Adgasency?:4
-//Triangle Adgasency?:5?
+//Line Adjacency:4
+//Triangle Adjacency:6
 
 //4
 layout (line_strip, max_vertices = MAX_VERTICES) out;
@@ -78,7 +82,21 @@ void drawWireFrame()
 	EndPrimitive();
 }
 
+void drawTangentBasis()	//Currently wrong
+{
+	vColor = vec4(0.0,0.0,1.0,1.0);
+	gl_Position = vVertexData[0].vTangentBasis_view[3] * uP;// Vertex view matrix 3 = position of vertex
+	EmitVertex();
+	//OFFSET???? position 
+	gl_Position = vVertexData[0].vTangentBasis_view[0] * uP;// Vertex view matrix 0 = tangent of vertex (axis)
+	EmitVertex();
+	EndPrimitive();
+	// Vertex view matrix 1 = bi-tangent of vertex (axis)
+	// Vertex view matrix 2 = normal of vertex (axis)
+}
+
 void main()
 {
+	drawTangentBasis();
 	drawWireFrame();
 }
