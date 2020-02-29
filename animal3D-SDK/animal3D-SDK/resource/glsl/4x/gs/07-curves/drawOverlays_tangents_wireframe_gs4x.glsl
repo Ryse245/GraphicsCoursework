@@ -82,21 +82,39 @@ void drawWireFrame()
 	EndPrimitive();
 }
 
-void drawTangentBasis()	//Currently wrong
+void drawTangentBasis(int index)	//Currently wrong
 {
-	vColor = vec4(0.0,0.0,1.0,1.0);
-	gl_Position = vVertexData[0].vTangentBasis_view[3] * uP;// Vertex view matrix 3 = position of vertex
+	vColor = vec4(0.0,1.0,0.0,1.0);
+	gl_Position =  uP * vVertexData[index].vTangentBasis_view[3];// Vertex view matrix 3 = position of vertex
 	EmitVertex();
-	//OFFSET???? position 
-	gl_Position = vVertexData[0].vTangentBasis_view[0] * uP;// Vertex view matrix 0 = tangent of vertex (axis)
+
+	gl_Position += normalize(uP * vVertexData[index].vTangentBasis_view[1]) * uSize*2;// Vertex view matrix 0 = tangent of vertex (axis)
 	EmitVertex();
 	EndPrimitive();
 	// Vertex view matrix 1 = bi-tangent of vertex (axis)
+	
+	vColor = vec4(1.0,0.0,0.0,1.0);
+	gl_Position = uP * vVertexData[index].vTangentBasis_view[3];// Vertex view matrix 3 = position of vertex
+	EmitVertex();
+
+	gl_Position += uP * normalize(vVertexData[index].vTangentBasis_view[0]) * uSize*2;// Vertex view matrix 0 = tangent of vertex (axis)
+	EmitVertex();
+	EndPrimitive();
 	// Vertex view matrix 2 = normal of vertex (axis)
+	vColor = vec4(0.0,0.0,1.0,1.0);
+	gl_Position = uP * vVertexData[index].vTangentBasis_view[3];// Vertex view matrix 3 = position of vertex
+	EmitVertex();
+
+	gl_Position += normalize(uP * vVertexData[index].vTangentBasis_view[2]) * uSize*2;// Vertex view matrix 0 = tangent of vertex (axis)
+	EmitVertex();
+	EndPrimitive();
 }
 
 void main()
 {
-	drawTangentBasis();
+	for(int i = 0; i < 3; i++)	//Loop did not appear to add any additional tangent displays?
+	{
+		drawTangentBasis(i);
+	}
 	drawWireFrame();
 }
