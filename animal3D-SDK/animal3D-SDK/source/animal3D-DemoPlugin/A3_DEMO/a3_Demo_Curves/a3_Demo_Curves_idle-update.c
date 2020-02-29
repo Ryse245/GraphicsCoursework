@@ -82,12 +82,24 @@ void a3curves_update(a3_DemoState* demoState, a3_Demo_Curves* demoMode, a3f64 dt
 		//			-> correct segment time & index accordingly
 		//		-> update parameter in range [0, 1)
 		// update controller
+		
+		//GOOD JOB STEPHEN :)
 
+		const a3f32 dr = demoState->updateAnimation ? (a3f32)dt : 0.0f;
 
+		demoState->segmentTime += dr;
 
+		if (demoState->segmentTime >= demoState->segmentDuration)
+		{
+			demoState->segmentTime = 0.0f;
+			demoState->segmentIndex++;
+			if (demoState->segmentIndex >= demoState->segmentCount)
+			{
+				demoState->segmentIndex = 0;
+			}
+		}
 
-
-
+		demoState->segmentParam = demoState->segmentTime * demoState->segmentDurationInv;
 
 
 
@@ -99,7 +111,7 @@ void a3curves_update(a3_DemoState* demoState, a3_Demo_Curves* demoMode, a3f64 dt
 
 		// ****TO-DO: 
 		//	-> uncomment interpolation
-		/*
+		///*
 		// perform position interpolation on current segment
 		switch (demoMode->interp)
 		{
@@ -142,7 +154,7 @@ void a3curves_update(a3_DemoState* demoState, a3_Demo_Curves* demoMode, a3f64 dt
 		//		demoState->segmentParam);
 			break;
 		}
-		*/
+		//*/
 	}
 	else
 	{
