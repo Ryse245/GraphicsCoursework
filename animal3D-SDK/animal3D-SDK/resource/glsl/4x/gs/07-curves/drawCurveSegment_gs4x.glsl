@@ -42,8 +42,48 @@
 //	5) declare outbound color
 //	6) write interpolation functions to help with sampling
 //	7) select curve type and sample over [0, 1] interval
+layout (lines_adjacency) in;
 
+layout (line_strip, max_vertices = MAX_VERTICES) out;
+
+uniform mat4 uMVP;
+uniform vec4 uColor;
+uniform float uTime;
+uniform int uIndex;
+uniform int uCount;
+uniform int uFlag;
+uniform mat4 ubo_curveWaypoint;
+
+//int k[4];
+
+out vec4 vColor;
+
+in vbVertexData {
+	mat4 vTangentBasis_view;
+	vec4 vTexcoord_atlas;
+	flat int vVertexID, vInstanceID, vModelID;
+} vVertexData[];
+
+
+void drawTest()
+{
+	vColor = vec4(1,0,0,1);
+	/*
+	gl_Position = ubo_curveWaypoint[0];
+	EmitVertex();
+	gl_Position = ubo_curveWaypoint[1];
+	EmitVertex();
+	EndPrimitive();
+	*/
+
+}
 void main()
 {
-	
+	/*
+	k[0] = uIndex;
+	k[1] = (uIndex + 1) % uCount;
+	k[2] = (uIndex + 2) % uCount;
+	k[2] = (uIndex + uCount-1) % uCount;
+	*/
+	drawTest();
 }
