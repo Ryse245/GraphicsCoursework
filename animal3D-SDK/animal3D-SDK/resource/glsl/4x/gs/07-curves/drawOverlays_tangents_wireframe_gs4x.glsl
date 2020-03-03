@@ -54,6 +54,7 @@ in vbVertexData {
 //3
 uniform mat4 uP;
 uniform float uSize;
+//uniform double uTime;
 
 //Points:1
 //Lines:2
@@ -70,14 +71,16 @@ out vec4 vColor;
 //7
 void drawWireFrame()
 {
+	//float test = sin(float(uTime));
+	float test = 0.0;
 	vColor = vec4(1.0,0.5,0.0,1.0);
-	gl_Position = gl_in[0].gl_Position;
+	gl_Position = gl_in[0].gl_Position + test;
 	EmitVertex();
-	gl_Position = gl_in[1].gl_Position;
+	gl_Position = gl_in[1].gl_Position + test;
 	EmitVertex();
-	gl_Position = gl_in[2].gl_Position;
+	gl_Position = gl_in[2].gl_Position + test;
 	EmitVertex();
-	gl_Position = gl_in[0].gl_Position;
+	gl_Position = gl_in[0].gl_Position + test;
 	EmitVertex();
 	EndPrimitive();
 }

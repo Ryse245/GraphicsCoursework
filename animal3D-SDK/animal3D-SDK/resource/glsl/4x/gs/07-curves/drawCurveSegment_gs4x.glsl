@@ -42,7 +42,7 @@
 //	5) declare outbound color
 //	6) write interpolation functions to help with sampling
 //	7) select curve type and sample over [0, 1] interval
-layout (lines_adjacency) in;
+layout (points) in;
 
 layout (line_strip, max_vertices = MAX_VERTICES) out;
 

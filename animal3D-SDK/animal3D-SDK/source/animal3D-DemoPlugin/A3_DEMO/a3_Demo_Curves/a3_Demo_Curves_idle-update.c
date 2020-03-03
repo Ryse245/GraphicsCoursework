@@ -153,6 +153,10 @@ void a3curves_update(a3_DemoState* demoState, a3_Demo_Curves* demoMode, a3f64 dt
 		//		m[1].v,
 		//		demoState->segmentParam);
 			break;
+
+		case curves_interpCosine:
+			//http://paulbourke.net/miscellaneous/interpolation/
+			break;
 		}
 		//*/
 	}

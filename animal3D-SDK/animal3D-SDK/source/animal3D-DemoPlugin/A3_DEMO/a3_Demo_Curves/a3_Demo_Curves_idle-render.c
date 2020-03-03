@@ -134,6 +134,7 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 		"Bezier interpolation",
 		"Catmull-Rom interpolation",
 		"Cubic Hermite interpolation",
+		"Cosine interpolation"
 	};
 
 	// text color
@@ -752,6 +753,9 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uSize, 1, size);
 			// overlay flag
 			a3shaderUniformSendInt(a3unif_single, currentDemoProgram->uFlag, 1, flag);
+
+			//Time (added)
+			//a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);
 
 			// draw objects again
 			for (currentSceneObject = demoState->planeObject, endSceneObject = demoState->teapotObject,

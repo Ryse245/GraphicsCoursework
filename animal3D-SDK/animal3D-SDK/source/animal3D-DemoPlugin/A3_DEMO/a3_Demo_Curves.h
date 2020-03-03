@@ -153,6 +153,9 @@ extern "C"
 		curves_interpCatmullRom,
 		curves_interpCubicHermite,
 
+		//mine
+		curves_interpCosine,
+		
 		curves_interp_max
 	};
 
