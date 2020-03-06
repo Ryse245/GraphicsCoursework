@@ -54,7 +54,9 @@ uniform ubPointLight {
 
 uniform int uLightCt;
 uniform vec4 uColor;
+uniform double uTime;
 uniform sampler2D uTex_dm, uTex_sm;
+uniform sampler2D tex_ramp_dm;
 
 
 // final color
@@ -152,10 +154,80 @@ void addPhongComponents(
 	diffuseLightTotal += attenuationColor * diffuseCoefficient;
 	specularLightTotal += attenuationColor * specularCoefficient;
 }
+/*
+float random(in vec2 uv)
+{
+	return fract(sin(dot(uv.xy, vec2(12.9898,78.233)))*45627.4867923);
+}
 
+float randomNoise(in vec2 uv)
+{
+	vec2 floorVec = floor(uv);
+	vec2 fractVec = fract(uv);
+
+	float a,b,c,d;
+	a = random(floorVec);
+	b = random(floorVec + vec2(1.0, 0.0));
+	c = random(floorVec + vec2(0.0, 1.0));
+	d = random(floorVec + vec2(1.0, 1.0));
+
+	vec2 fractCombo = fractVec * fractVec * (3.0 - (2.0*fractVec));
+	return mix(a,b,fractCombo.x) + (c-a)* fractCombo.y * (1.0 - fractCombo.x) + (d-b) * fractCombo.x * fractCombo.y;
+}
+
+float fbm(in vec2 uv)
+{
+	float initValue = 0.0;
+	float amplitude = 0.5;
+	float frequency = 0.0;
+	for(int i = 0; i < 6; i++)
+	{
+		initValue += amplitude * randomNoise(uv);
+		uv *= 2.0;
+		amplitude *= 0.5;
+	}
+	return initValue;
+}
+
+vec4 finalWarp()
+{
+	vec2 uv = gl_FragCoord.xy/vTexcoord_atlas.xy*3.0;
+	vec3 color = vec3(0.0);
+	vec2 r, q = vec2(0.0);
+
+	q.x = fbm(uv);
+	q.y = fbm(uv +vec2(1.0));
+	
+	r.x = fbm(uv + 1.0*q + vec2(1.7,9.2)+0.15 * float(uTime));
+	r.y = fbm(uv + 1.0*q + vec2(8.3,2.8)+0.126 * float(uTime));
+
+	//Continued: https://thebookofshaders.com/13/
+}
+*/
+
+vec4 fractalTest()
+{
+	vec2 z, c;
+
+    c.x = 1.3333 * (vTexcoord_atlas.x - 0.5) * 2.0 - gl_Position.x;	//replace with vertex varying position
+    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - gl_Position.y;
+
+	int i;
+    z = c;
+    for(i=0; i<8; i++) {
+        float x = (z.x * z.x - z.y * z.y) + c.x;
+        float y = (z.y * z.x + z.x * z.y) + c.y;
+
+        if((x * x + y * y) > 4.0) break;
+        z.x = x;
+        z.y = y;
+    }
+	return texture(tex_ramp_dm,vec2(i == 8.0 ? 0.0 : float(i))/100.0);
+}
 
 void main()
 {
+
 	// DUMMY OUTPUT: all fragments are colored based on model index
 //	vec4 color[6] = vec4[6] ( vec4(1.0, 0.0, 0.0, 1.0), vec4(1.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 1.0, 1.0), vec4(0.0, 0.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0) );
 //	rtFragColor = color[vModelID % 6];
@@ -204,7 +276,7 @@ void main()
 	rtFragColor.a = sample_dm.a;
 
 	// output attributes
-	rtAtlasTexcoord = vTexcoord_atlas;
+	rtAtlasTexcoord = fractalTest();
 	rtViewTangent = vec4(T.xyz * 0.5 + 0.5, 1.0);
 	rtViewBitangent = vec4(B.xyz * 0.5 + 0.5, 1.0);
 	rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);

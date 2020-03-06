@@ -324,6 +324,7 @@ void a3shading_render(a3_DemoState const* demoState, a3_Demo_Shading const* demo
 			a3shaderUniformSendFloat(a3unif_single, currentDemoProgram->uLightSzInvSq, demoState->forwardLightCount, lightSzInvSq);
 			a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uLightPos, demoState->forwardLightCount, lightPos->v);
 			a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uLightCol, demoState->forwardLightCount, lightCol->v);
+			a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);	//Added
 			a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 			a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
 
