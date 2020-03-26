@@ -207,20 +207,21 @@ vec4 finalWarp()
 }
 */
 
+//Currently used fractal pattern
 vec4 fractalTest()
 {
 	vec2 z, c;
 
-    c.x = (vTexcoord_atlas.x - 0.5) * 2.0 - testPos.x*0.25;
-    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - testPos.y*0.25;
+    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
 
 	int i;
     z = c;
-    for(i=0; i<20; i++) {
+    for(i=0; i<20; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
-        if((x * x + y * y) > 8.0) break;
+        if((x * x + y * y) > 170.0) break;
         z.x = x;
         z.y = y;
     }
@@ -272,12 +273,12 @@ void main()
 
 
 	// final color
-	/*
+	
 	rtFragColor.rgb = ambient
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
-					*/
-	rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
+					
+	rtFragColor.rgb *= (fractalTest().rgb);	//Display the fractal pattern created
 	rtFragColor.a = sample_dm.a;
 
 	// output attributes
