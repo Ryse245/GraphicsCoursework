@@ -156,10 +156,10 @@ void addPhongComponents(
 	diffuseLightTotal += attenuationColor * diffuseCoefficient;
 	specularLightTotal += attenuationColor * specularCoefficient;
 }
-/*
+
 float random(in vec2 uv)
 {
-	return fract(sin(dot(uv.xy, vec2(12.9898,78.233)))*45627.4867923);
+	return fract(sin(dot(uv.xy, vec2(0.5,0.5)))*1.0);
 }
 
 float randomNoise(in vec2 uv)
@@ -179,7 +179,7 @@ float randomNoise(in vec2 uv)
 
 float fbm(in vec2 uv)
 {
-	float initValue = 0.0;
+	/*float initValue = 0.0;
 	float amplitude = 0.5;
 	float frequency = 0.0;
 	for(int i = 0; i < 6; i++)
@@ -189,6 +189,19 @@ float fbm(in vec2 uv)
 		amplitude *= 0.5;
 	}
 	return initValue;
+	*/
+	float v = 0.0;
+    float a = 0.5;
+    vec2 shift = vec2(100.0);
+    // Rotate to reduce axial bias
+    mat2 rot = mat2(cos(0.5), sin(0.5),
+                    -sin(0.5), cos(0.50));
+    for (int i = 0; i < 5; ++i) {
+        v += a * randomNoise(uv);
+        uv = rot * uv * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
 }
 
 vec4 finalWarp()
@@ -196,36 +209,57 @@ vec4 finalWarp()
 	vec2 uv = gl_FragCoord.xy/vTexcoord_atlas.xy*3.0;
 	vec3 color = vec3(0.0);
 	vec2 r, q = vec2(0.0);
-
-	q.x = fbm(uv);
+	
+	q.x = fbm(uv+ float(uTime));
 	q.y = fbm(uv +vec2(1.0));
 	
 	r.x = fbm(uv + 1.0*q + vec2(1.7,9.2)+0.15 * float(uTime));
 	r.y = fbm(uv + 1.0*q + vec2(8.3,2.8)+0.126 * float(uTime));
 
+	float f = fbm(uv + r);
+
+	color = mix(vec3(0.101961,0.619608,0.666667),
+                vec3(0.666667,0.666667,0.498039),
+                clamp((f*f)*4.0,0.0,1.0));
+
+    color = mix(color,
+                vec3(0,0,0.164706),
+                clamp(length(q),0.0,1.0));
+
+    color = mix(color,
+                vec3(0.666667,1,1),
+                clamp(length(r.x),0.0,1.0));
+
+	return vec4(color,1.0);
 	//Continued: https://thebookofshaders.com/13/
 }
-*/
+
 
 //Currently used fractal pattern
 vec4 fractalTest()
 {
+	//http://nuclear.mutantstargoat.com/articles/sdr_fract/ fractals
 	vec2 z, c;
-
+	/*Manelbrot
     c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
     c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
+	*/
 
+	///*Julia
+	c.x = 4.0 * (vTexcoord_atlas.x -0.5);
+	c.y = 3.0 * (vTexcoord_atlas.y - 0.5);
+	//*/
 	int i;
     z = c;
-    for(i=0; i<20; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
-        if((x * x + y * y) > 170.0) break;
+        if((x * x + y * y) > 173.0) break;
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 8.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 void main()
@@ -274,15 +308,15 @@ void main()
 
 	// final color
 	
-	rtFragColor.rgb = ambient
+	/*rtFragColor.rgb = ambient
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
-					
-	rtFragColor.rgb *= (fractalTest().rgb);	//Display the fractal pattern created
+	*/
+	rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
 	rtFragColor.a = sample_dm.a;
-
+	
 	// output attributes
-	rtAtlasTexcoord = fractalTest();
+	rtAtlasTexcoord = finalWarp();
 	rtViewTangent = vec4(T.xyz * 0.5 + 0.5, 1.0);
 	rtViewBitangent = vec4(B.xyz * 0.5 + 0.5, 1.0);
 	rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);
