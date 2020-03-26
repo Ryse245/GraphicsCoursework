@@ -58,6 +58,7 @@ out vbVertexData {
 	flat int vVertexID, vInstanceID, vModelID;
 };
 
+out vec4 testPos;
 
 void main()
 {
@@ -72,4 +73,5 @@ void main()
 	vTangentBasis_view = t.modelViewNormalMat * tangentBasis_object;
 	vTangentBasis_view[3] = t.modelViewMat * aPosition;
 	gl_Position = t.modelViewProjectionMat * aPosition;
+	testPos = gl_Position;
 }

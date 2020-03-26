@@ -35,6 +35,8 @@ in vbVertexData {
 	flat int vVertexID, vInstanceID, vModelID;
 };
 
+//Mine
+in vec4 testPos;
 
 struct sPointLight
 {
@@ -209,8 +211,8 @@ vec4 fractalTest()
 {
 	vec2 z, c;
 
-    c.x = 1.3333 * (vTexcoord_atlas.x - 0.5) * 2.0 - gl_Position.x;	//replace with vertex varying position
-    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - gl_Position.y;
+    c.x = 1.3333 * (vTexcoord_atlas.x - 0.5) * 2.0 - testPos.x;	//replace with vertex varying position
+    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - testPos.y;
 
 	int i;
     z = c;
@@ -270,9 +272,12 @@ void main()
 
 
 	// final color
+	/*
 	rtFragColor.rgb = ambient
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
+					*/
+	rtFragColor.rgb = fractalTest().rgb;
 	rtFragColor.a = sample_dm.a;
 
 	// output attributes
