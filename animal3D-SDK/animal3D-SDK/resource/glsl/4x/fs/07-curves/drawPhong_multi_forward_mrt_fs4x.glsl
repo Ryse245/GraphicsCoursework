@@ -211,16 +211,16 @@ vec4 fractalTest()
 {
 	vec2 z, c;
 
-    c.x = 1.3333 * (vTexcoord_atlas.x - 0.5) * 2.0 - testPos.x;	//replace with vertex varying position
-    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - testPos.y;
+    c.x = (vTexcoord_atlas.x - 0.5) * 2.0 - testPos.x*0.25;
+    c.y = (vTexcoord_atlas.y - 0.5) * 2.0 - testPos.y*0.25;
 
 	int i;
     z = c;
-    for(i=0; i<8; i++) {
+    for(i=0; i<20; i++) {
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
-        if((x * x + y * y) > 4.0) break;
+        if((x * x + y * y) > 8.0) break;
         z.x = x;
         z.y = y;
     }
@@ -277,7 +277,7 @@ void main()
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
 					*/
-	rtFragColor.rgb = fractalTest().rgb;
+	rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
 	rtFragColor.a = sample_dm.a;
 
 	// output attributes
