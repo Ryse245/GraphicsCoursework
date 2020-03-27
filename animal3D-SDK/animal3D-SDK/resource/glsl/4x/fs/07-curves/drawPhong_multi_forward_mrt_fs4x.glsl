@@ -206,7 +206,8 @@ float fbm(in vec2 uv)
 
 vec4 finalWarp()
 {
-	vec2 uv = gl_FragCoord.xy/vTexcoord_atlas.xy*3.0;
+	//vec2 uv = gl_FragCoord.xy/vec2(960,540); //resolution is 960x540(main_win.c line 61), needed to get the uv
+	vec2 uv = vTexcoord_atlas.xy;
 	vec3 color = vec3(0.0);
 	vec2 r, q = vec2(0.0);
 	
@@ -323,6 +324,7 @@ void main()
 	rtViewPosition = P;
 
 	// output lighting
-	rtDiffuseLightTotal = vec4(diffuseLightTotal, 1.0);
+	//rtDiffuseLightTotal = vec4(diffuseLightTotal, 1.0);
+	rtDiffuseLightTotal = texture(tex_ramp_dm,vTexcoord_atlas.xy);
 	rtSpecularLightTotal = vec4(specularLightTotal, 1.0);
 }

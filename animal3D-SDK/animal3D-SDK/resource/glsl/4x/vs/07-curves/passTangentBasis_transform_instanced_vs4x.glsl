@@ -74,4 +74,5 @@ void main()
 	vTangentBasis_view[3] = t.modelViewMat * aPosition;
 	gl_Position = t.modelViewProjectionMat * aPosition;
 	testPos = gl_Position;
+	
 }
