@@ -106,6 +106,12 @@
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\07-curves">
       <UniqueIdentifier>{1540b83f-7619-43c7-94ac-ddab1b7c7c2b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\Midterm">
+      <UniqueIdentifier>{f7ce36a7-84f4-491c-98d6-080cd3cebdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\Midterm">
+      <UniqueIdentifier>{222d769d-80ce-41e7-82f8-e73c795f95ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="_src_win\main_dll.c">
@@ -312,6 +318,12 @@
     </None>
     <None Include="..\..\..\resource\glsl\4x\gs\07-curves\drawCurveSegment_gs4x.glsl">
       <Filter>Resource Files\A3_DEMO\glsl\4x\gs\07-curves</Filter>
+    </None>
+    <None Include="fractalPattern_vs.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\vs\Midterm</Filter>
+    </None>
+    <None Include="drawFractalPattern_fs.glsl">
+      <Filter>Resource Files\A3_DEMO\glsl\4x\fs\Midterm</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -431,6 +431,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// 07-curves
 			a3_DemoStateShader
 				passTangentBasis_transform_instanced_vs[1];
+			//Midterm
+			a3_DemoStateShader
+				fractalPattern_vs[1];
 
 			// geometry shaders
 			// 07-curves
@@ -475,6 +478,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			// 07-curves
 			a3_DemoStateShader
 				drawPhong_multi_forward_mrt_fs[1];
+			//Midterm
+			a3_DemoStateShader
+				drawFractalPattern_fs[1];
 		};
 	} shaderList = {
 		{
@@ -500,6 +506,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"shdr-vs:pass-biasedclip-inst",		a3shader_vertex  ,	1,{ A3_DEMO_VS"06-deferred/e/passBiasedClipCoord_transform_instanced_vs4x.glsl" } } },
 			// 07-curves
 			{ { { 0 },	"shdr-vs:pass-tangent-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"07-curves/passTangentBasis_transform_instanced_vs4x.glsl" } } },
+
+			//Midterm
+			{ { { 0 },	"shdr-vs:fractal-patern-vs",	a3shader_vertex  ,	1,{ A3_DEMO_VS"Midterm/fractalPattern_vs.glsl" } } },
 
 			// gs
 			// 07-curves
@@ -536,6 +545,9 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"shdr-fs:draw-Phong-composite",		a3shader_fragment,	1,{ A3_DEMO_FS"06-deferred/e/drawPhongComposite_fs4x.glsl" } } },
 			// 07-curves
 			{ { { 0 },	"shdr-fs:draw-Phong-mul-fwd-mrt",	a3shader_fragment,	1,{ A3_DEMO_FS"07-curves/drawPhong_multi_forward_mrt_fs4x.glsl" } } },
+
+			//Midterm
+			{ { { 0 },	"shdr-fs:draw-fractal-pattern",	a3shader_fragment,	1,{ A3_DEMO_FS"Midterm/drawFractalPattern_fs.glsl" } } },
 		}
 	};
 	a3_DemoStateShader *const shaderListPtr = (a3_DemoStateShader *)(&shaderList), *shaderPtr;
@@ -716,6 +728,12 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.passthru_vs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawCurveSegment_gs->shader);
 	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawColorAttrib_fs->shader);
+
+	//Midterm addition, Fractals
+	currentDemoProg = demoState->prog_drawFractalPattern;
+	a3shaderProgramCreate(currentDemoProg->program, "prog:draw-Fractal-Pattern");
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.fractalPattern_vs->shader);
+	a3shaderProgramAttachShader(currentDemoProg->program, shaderList.drawFractalPattern_fs->shader);
 
 
 	// activate a primitive for validation

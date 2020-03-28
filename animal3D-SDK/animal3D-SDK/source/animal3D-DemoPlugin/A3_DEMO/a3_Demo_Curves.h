@@ -58,6 +58,7 @@ extern "C"
 	enum a3_Demo_Curves_RenderProgramName
 	{
 		curves_renderPhong,			// Phong shading
+		//curves_renderFractal,
 
 		curves_render_max
 	};
@@ -85,6 +86,7 @@ extern "C"
 	enum a3_Demo_Curves_PipelineName
 	{
 		curves_forward,				// forward lighting pipeline
+		//curves_fractal,
 
 		curves_pipeline_max
 	};
@@ -108,6 +110,8 @@ extern "C"
 		curves_passBlurH_8,			// horizontal blur for bloom (eighth screen size)
 		curves_passBlurV_8,			// horizontal blur for bloom (eighth screen size)
 		curves_passBlend,			// bloom composite pass
+
+		curves_passFractal,				//fractal section for midterm
 
 		curves_pass_max
 	};
@@ -138,6 +142,11 @@ extern "C"
 
 		curves_blur_finalcolor = 0,			// final display color
 		curves_target_blur_max,
+
+		curves_fractal_mandelbrot = 0,
+		curves_fractal_julia,
+		curves_fractal_noise,
+		curves_target_fractal_max,
 
 		curves_display_finalcolor = 0,		// final display color
 		curves_target_display_max,

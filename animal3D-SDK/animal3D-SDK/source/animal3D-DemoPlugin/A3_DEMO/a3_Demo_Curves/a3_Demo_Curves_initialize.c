@@ -58,6 +58,7 @@ void a3curves_init(a3_DemoState const* demoState, a3_Demo_Curves* demoMode)
 	demoMode->targetIndex[curves_passBlurH_8] = curves_blur_finalcolor;
 	demoMode->targetIndex[curves_passBlurV_8] = curves_blur_finalcolor;
 	demoMode->targetIndex[curves_passBlend] = curves_display_finalcolor;
+	demoMode->targetIndex[curves_passFractal] = curves_fractal_mandelbrot;
 
 	demoMode->targetCount[curves_passShadow] = curves_target_shadow_max;
 	demoMode->targetCount[curves_passScene] = curves_target_scene_max;
@@ -72,6 +73,7 @@ void a3curves_init(a3_DemoState const* demoState, a3_Demo_Curves* demoMode)
 	demoMode->targetCount[curves_passBlurH_8] = curves_target_blur_max;
 	demoMode->targetCount[curves_passBlurV_8] = curves_target_blur_max;
 	demoMode->targetCount[curves_passBlend] = curves_target_display_max;
+	demoMode->targetCount[curves_passFractal] = curves_target_fractal_max;
 
 	demoMode->interp = curves_interpNone;
 }

@@ -54,6 +54,7 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 	// display mode info
 	a3byte const* pipelineText[curves_pipeline_max] = {
 		"Forward rendering",
+		//"Fractals"
 	};
 
 	// forward pipeline names
@@ -88,6 +89,7 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 		"Pass: Horizontal blur (1/8 frame)",
 		"Pass: Vertical blur (1/8 frame)",
 		"Pass: Bloom composite",
+		"Pass: Fractals"
 	};
 	a3byte const* targetText_shadow[curves_target_shadow_max] = {
 		"Depth buffer",
@@ -113,6 +115,11 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 	a3byte const* targetText_blur[curves_target_blur_max] = {
 		"Color target 0: FINAL DISPLAY COLOR",
 	};
+	a3byte const* targetText_fractal[curves_target_fractal_max] = {
+		"Color target 0: Fractal Pattern(MandelBrot)",
+		"Color target 1: Fractal Pattern(Julia)",
+		"Color target 2: Fractal Noise",
+	};
 	a3byte const* const* targetText[curves_pass_max] = {
 		targetText_shadow,
 		targetText_scene,
@@ -127,6 +134,7 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 		targetText_blur,
 		targetText_blur,
 		targetText_composite,
+		targetText_fractal
 	};
 	a3byte const* interpText[curves_interp_max] = {
 		"No interpolation",
@@ -256,6 +264,7 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	const a3_DemoStateShaderProgram* renderProgram[curves_pipeline_max][curves_render_max] = {
 		{
 			demoState->prog_drawPhong_multi_forward_mrt,
+			//demoState->prog_drawFractalPattern
 		},
 	};
 
