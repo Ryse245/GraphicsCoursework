@@ -60,6 +60,12 @@ void a3pipelines_init(a3_DemoState const* demoState, a3_Demo_Pipelines* demoMode
 	demoMode->targetIndex[pipelines_passBlurV_8] = pipelines_blur_finalcolor;
 	demoMode->targetIndex[pipelines_passBlend] = pipelines_display_finalcolor;
 
+	//Midterm
+	demoMode->targetIndex[pipelines_passFractal_Mandelbrot] = pipelines_display_fractal_mandelbrot;
+	demoMode->targetIndex[pipelines_passFractal_Julia] = pipelines_display_fractal_julia;
+	demoMode->targetIndex[pipelines_passFractal_Noise] = pipelines_display_fractal_noise;
+
+
 	demoMode->targetCount[pipelines_passShadow] = pipelines_target_shadow_max;
 	demoMode->targetCount[pipelines_passScene] = pipelines_target_scene_max;
 	demoMode->targetCount[pipelines_passLighting] = pipelines_target_composite_max;
@@ -74,6 +80,11 @@ void a3pipelines_init(a3_DemoState const* demoState, a3_Demo_Pipelines* demoMode
 	demoMode->targetCount[pipelines_passBlurH_8] = pipelines_target_blur_max;
 	demoMode->targetCount[pipelines_passBlurV_8] = pipelines_target_blur_max;
 	demoMode->targetCount[pipelines_passBlend] = pipelines_target_display_max;
+
+	//Midterm
+	demoMode->targetCount[pipelines_passFractal_Mandelbrot] = pipelines_target_display_max;
+	demoMode->targetCount[pipelines_passFractal_Julia] = pipelines_target_display_max;
+	demoMode->targetCount[pipelines_passFractal_Noise] = pipelines_target_display_max;
 }
 
 

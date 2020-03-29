@@ -764,6 +764,33 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 		a3framebufferBindColorTexture(readFBO[currentPass][i], a3tex_unit00 + i, 0);
 	a3vertexDrawableRenderActive();
 
+	//Midterm
+	currentDemoProgram = demoState->prog_drawFractalPattern;
+	a3shaderProgramActivate(currentDemoProgram->program);
+
+	currentPass = pipelines_passFractal_Mandelbrot;
+	currentWriteFBO = writeFBO[currentPass];
+	currentReadFBO = readFBO[currentPass][0];
+	a3framebufferActivate(currentWriteFBO);
+	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
+	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, sampleAxisV.v);
+	a3vertexDrawableRenderActive();
+
+	currentPass = pipelines_passFractal_Julia;
+	currentWriteFBO = writeFBO[currentPass];
+	currentReadFBO = readFBO[currentPass][0];
+	a3framebufferActivate(currentWriteFBO);
+	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
+	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, sampleAxisV.v);
+	a3vertexDrawableRenderActive();
+
+	currentPass = pipelines_passFractal_Noise;
+	currentWriteFBO = writeFBO[currentPass];
+	currentReadFBO = readFBO[currentPass][0];
+	a3framebufferActivate(currentWriteFBO);
+	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
+	a3shaderUniformSendFloat(a3unif_vec2, currentDemoProgram->uAxis, 1, sampleAxisV.v);
+	a3vertexDrawableRenderActive();
 
 	//-------------------------------------------------------------------------
 	// DISPLAY: final pass, perform and present final composite
@@ -803,6 +830,9 @@ void a3pipelines_render(a3_DemoState const* demoState, a3_Demo_Pipelines const* 
 	case pipelines_passBlurH_8:
 	case pipelines_passBlurV_8:
 	case pipelines_passBlend:
+	case pipelines_passFractal_Mandelbrot:
+	case pipelines_passFractal_Julia:
+	case pipelines_passFractal_Noise:
 		a3framebufferBindColorTexture(currentDisplayFBO, a3tex_unit00, targetIndex);
 		break;
 	}

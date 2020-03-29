@@ -113,6 +113,9 @@ extern "C"
 		pipelines_passBlurV_8,			// horizontal blur for bloom (eighth screen size)
 		pipelines_passBlend,			// bloom composite pass
 
+		pipelines_passFractal_Mandelbrot,			//Midterm fractal passes
+		pipelines_passFractal_Julia,
+		pipelines_passFractal_Noise,
 		pipelines_pass_max
 	};
 
@@ -151,6 +154,10 @@ extern "C"
 		pipelines_target_blur_max,
 
 		pipelines_display_finalcolor = 0,	// final display color
+
+		pipelines_display_fractal_mandelbrot,	//Midterm fractal targets
+		pipelines_display_fractal_julia,
+		pipelines_display_fractal_noise,
 		pipelines_target_display_max,
 	};
 

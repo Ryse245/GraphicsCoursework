@@ -309,11 +309,11 @@ void main()
 
 	// final color
 	
-	/*rtFragColor.rgb = ambient
+	rtFragColor.rgb = ambient
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
-	*/
-	rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
+	
+	//rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
 	rtFragColor.a = sample_dm.a;
 	
 	// output attributes

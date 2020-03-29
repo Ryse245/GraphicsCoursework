@@ -62,7 +62,7 @@ uniform sampler2D tex_ramp_dm;
 
 
 // final color
-layout (location = 0) out vec4 rtMandelbrot;
+layout (location = 0) out vec4 rtMandelbrot;;
 
 // attribute data
 layout (location = 1) out vec4 rtJulia;
@@ -357,7 +357,6 @@ void main()
 	// output attributes
 	//rtNoise = finalWarp();
 	rtNoise = vec4(1.0);
-
 
 	//**Target 0 will be mandelbrot, 1 Julia, 2 fractal noise***
 }
