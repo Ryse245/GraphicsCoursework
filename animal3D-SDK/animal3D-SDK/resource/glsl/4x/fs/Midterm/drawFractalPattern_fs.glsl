@@ -62,18 +62,12 @@ uniform sampler2D tex_ramp_dm;
 
 
 // final color
-layout (location = 0) out vec4 rtFragColor;
+layout (location = 0) out vec4 rtMandelbrot;
 
 // attribute data
-layout (location = 1) out vec4 rtAtlasTexcoord;
-layout (location = 2) out vec4 rtViewTangent;
-layout (location = 3) out vec4 rtViewBitangent;
-layout (location = 4) out vec4 rtViewNormal;
-layout (location = 5) out vec4 rtViewPosition;
+layout (location = 1) out vec4 rtJulia;
+layout (location = 2) out vec4 rtNoise;
 
-// lighting data
-layout (location = 6) out vec4 rtDiffuseLightTotal;
-layout (location = 7) out vec4 rtSpecularLightTotal;
 
 
 float pow64(float v)
@@ -263,6 +257,45 @@ vec4 fractalTest()
 	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
+vec4 mandelbrotFractal()
+{
+	vec2 z, c;
+	//Manelbrot
+    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
+	
+	int i;
+    z = c;
+    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+        float x = (z.x * z.x - z.y * z.y) + c.x;
+        float y = (z.y * z.x + z.x * z.y) + c.y;
+
+        if((x * x + y * y) > 173.0) break;
+        z.x = x;
+        z.y = y;
+    }
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+}
+
+vec4 juliaFractal()
+{
+	vec2 z, c;
+	//Julia
+	c.x = 4.0 * (vTexcoord_atlas.x -0.5);
+	c.y = 3.0 * (vTexcoord_atlas.y - 0.5);
+
+	int i;
+    z = c;
+    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+        float x = (z.x * z.x - z.y * z.y) + c.x;
+        float y = (z.y * z.x + z.x * z.y) + c.y;
+
+        if((x * x + y * y) > 173.0) break;
+        z.x = x;
+        z.y = y;
+    }
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+}
 void main()
 {
 
@@ -313,20 +346,17 @@ void main()
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;
 	*/
-	rtFragColor.rgb = fractalTest().rgb;	//Display the fractal pattern created
-	rtFragColor.a = sample_dm.a;
+	//rtMandelbrot.rgb = mandelbrotFractal().rgb;	//Display the fractal pattern created
+	rtMandelbrot.rgb = vec3(1.0);	//Display the fractal pattern created
+	//rtMandelbrot.a = sample_dm.a;
 	
-	// output attributes
-	rtAtlasTexcoord = finalWarp();
-	rtViewTangent = vec4(T.xyz * 0.5 + 0.5, 1.0);
-	rtViewBitangent = vec4(B.xyz * 0.5 + 0.5, 1.0);
-	rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);
-	rtViewPosition = P;
+	//rtJulia.rgb = juliaFractal().rgb;	//Display the fractal pattern created
+	rtJulia.rgb = vec3(1.0,0.0,0.0);	//Display the fractal pattern created
+	//rtJulia.a = sample_dm.a;
 
-	// output lighting
-	//rtDiffuseLightTotal = vec4(diffuseLightTotal, 1.0);
-	rtDiffuseLightTotal = texture(tex_ramp_dm,vTexcoord_atlas.xy);
-	rtSpecularLightTotal = vec4(specularLightTotal, 1.0);
+	// output attributes
+	//rtNoise = finalWarp();
+	rtNoise = vec4(1.0);
 
 
 	//**Target 0 will be mandelbrot, 1 Julia, 2 fractal noise***

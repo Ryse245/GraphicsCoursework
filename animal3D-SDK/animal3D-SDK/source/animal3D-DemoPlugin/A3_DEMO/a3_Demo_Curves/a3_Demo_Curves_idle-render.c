@@ -116,7 +116,7 @@ void a3curves_render_controls(a3_DemoState const* demoState, a3_Demo_Curves cons
 		"Color target 0: FINAL DISPLAY COLOR",
 	};
 	a3byte const* targetText_fractal[curves_target_fractal_max] = {
-		"Color target 0: Fractal Pattern(MandelBrot)",
+		"Color target 0: Fractal Pattern(Mandelbrot)",
 		"Color target 1: Fractal Pattern(Julia)",
 		"Color target 2: Fractal Noise",
 	};
@@ -307,7 +307,7 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 		{ demoState->fbo_post_c16_8fr + 0, 0, },
 		{ demoState->fbo_post_c16_8fr + 1, 0, },
 		{ demoState->fbo_post_c16_8fr + 2, demoState->fbo_post_c16_4fr + 2, demoState->fbo_post_c16_2fr + 2, demoState->fbo_composite_c16 + 2, },
-		{ demoState->fbo_fractal, 0, },
+		{ demoState->fbo_scene_c16d24s8_mrt, 0, },
 	};
 
 	// target info
@@ -648,11 +648,13 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	a3shaderProgramActivate(currentDemoProgram->program);
 
 	currentPass = curves_passFractal;
-	currentWriteFBO = writeFBO[currentPass];
+	//currentWriteFBO = writeFBO[currentPass];
 	currentReadFBO = readFBO[currentPass][0];
+	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
 	a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 	a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
 	a3framebufferActivate(currentWriteFBO);
+	a3vertexDrawableRenderActive();
 
 	//-------------------------------------------------------------------------
 	// DISPLAY: final pass, perform and present final composite
