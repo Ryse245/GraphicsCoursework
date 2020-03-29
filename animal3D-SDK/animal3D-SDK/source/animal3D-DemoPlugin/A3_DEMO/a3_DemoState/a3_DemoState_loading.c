@@ -508,7 +508,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 			{ { { 0 },	"shdr-vs:pass-tangent-trans-inst",	a3shader_vertex  ,	1,{ A3_DEMO_VS"07-curves/passTangentBasis_transform_instanced_vs4x.glsl" } } },
 
 			//Midterm
-			{ { { 0 },	"shdr-vs:fractal-patern-vs",	a3shader_vertex  ,	1,{ A3_DEMO_VS"Midterm/fractalPattern_vs.glsl" } } },
+			{ { { 0 },	"shdr-vs:fractal-pattern-vs",	a3shader_vertex  ,	1,{ A3_DEMO_VS"Midterm/fractalPattern_vs.glsl" } } },
 
 			// gs
 			// 07-curves
@@ -1026,6 +1026,11 @@ void a3demo_loadFramebuffers(a3_DemoState* demoState)
 			targets_post, colorType_post, a3fbo_depthDisable,
 			frameWidth8, frameHeight8);
 	}
+
+	fbo = demoState->fbo_fractal;
+	a3framebufferCreate(fbo, "fbo:fractal",
+		targets_scene, colorType_scene, depthType_scene,
+		frameWidth1, frameHeight1);
 
 
 	// change texture settings for all framebuffers
