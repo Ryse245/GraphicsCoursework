@@ -651,10 +651,11 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	currentPass = curves_passFractal;
 	currentWriteFBO = writeFBO[currentPass];
 	currentReadFBO = readFBO[currentPass][0];
+	a3framebufferActivate(currentWriteFBO);
 	a3framebufferBindColorTexture(currentReadFBO, a3tex_unit00, 0);
 	//a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 	//a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
-	a3framebufferActivate(currentWriteFBO);
+	a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);
 
 	a3vertexDrawableRenderActive();
 
@@ -696,6 +697,9 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	case curves_passBlurH_8:
 	case curves_passBlurV_8:
 	case curves_passBlend:
+		a3framebufferBindColorTexture(currentDisplayFBO, a3tex_unit00, targetIndex);
+		break;
+	case curves_passFractal:
 		a3framebufferBindColorTexture(currentDisplayFBO, a3tex_unit00, targetIndex);
 		break;
 	}

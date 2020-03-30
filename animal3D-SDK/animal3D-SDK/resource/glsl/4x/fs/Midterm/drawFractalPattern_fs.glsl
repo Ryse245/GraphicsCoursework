@@ -38,118 +38,15 @@ in vbVertexData {
 //Mine
 in vec4 testPos;
 
-struct sPointLight
-{
-	vec4 worldPos;
-	vec4 viewPos;
-	vec4 color;
-	float radius;
-	float radiusInvSq;
-	float radiusInv;
-	float radiusSq;
-};
-
-
-uniform ubPointLight {
-	sPointLight uPointLight[MAX_LIGHTS];
-};
-
-uniform int uLightCt;
 uniform vec4 uColor;
 uniform double uTime;
 uniform sampler2D uTex_dm, uTex_sm;
 uniform sampler2D tex_ramp_dm;
 
 
-// final color
 layout (location = 0) out vec4 rtMandelbrot;;
-
-// attribute data
 layout (location = 1) out vec4 rtJulia;
 layout (location = 2) out vec4 rtNoise;
-
-
-
-float pow64(float v)
-{
-	v *= v;	// ^2
-	v *= v;	// ^4
-	v *= v;	// ^8
-	v *= v;	// ^16
-	v *= v;	// ^32
-	v *= v;	// ^64
-	return v;
-}
-
-
-vec3 refl(in vec3 v, in vec3 n, in float d)
-{
-	return ((2.0 * d) * n - v);
-}
-
-
-float calcDiffuseCoefficient(
-	out vec3 lightVec, out float lightDist, out float lightDistSq,
-	in vec3 lightPos, in vec3 fragPos, in vec3 fragNrm)
-{
-	lightVec = lightPos - fragPos;
-	lightDistSq = dot(lightVec, lightVec);
-	lightDist = sqrt(lightDistSq);
-	lightVec /= lightDist;
-	return dot(lightVec, fragNrm);
-}
-
-
-float calcSpecularCoefficient(
-	out vec3 reflVec, out vec3 eyeVec,
-	in vec3 lightVec, in float diffuseCoefficient,
-	in vec3 fragPos, in vec3 fragNrm, in vec3 eyePos)
-{
-	reflVec = refl(lightVec, fragNrm, diffuseCoefficient);
-	eyeVec = normalize(eyePos - fragPos);
-	return dot(reflVec, eyeVec);
-}
-
-
-float calcAttenuation(
-	float lightDist, float lightDistSq,
-	float lightSz, float lightSzInvSq, float lightSzInv, float lightSzSq)
-{
-//	float atten = max(0.0, (1.0 - lightDistSq * lightSzInvSq));
-	float atten = (1.0 / (1.0 + 2.0 * lightDist * lightSzInv + lightDistSq * lightSzInvSq));
-	return atten;
-}
-
-
-void addPhongComponents(
-	inout vec3 diffuseLightTotal, out float diffuseCoefficient,
-	inout vec3 specularLightTotal, out float specularCoefficient,
-	in vec3 lightPos, in vec3 lightCol,
-	in float lightSz, in float lightSzInvSq, in float lightSzInv, in float lightSzSq,
-	in vec3 fragPos, in vec3 fragNrm, in vec3 eyePos)
-{
-	float lightDist, lightDistSq, attenuation;
-	vec3 lightVec, reflVec, eyeVec;
-	vec3 attenuationColor;
-
-	diffuseCoefficient = calcDiffuseCoefficient(
-		lightVec, lightDist, lightDistSq,
-		lightPos, fragPos, fragNrm);
-	specularCoefficient = calcSpecularCoefficient(
-		reflVec, eyeVec,
-		lightVec, diffuseCoefficient,
-		fragPos, fragNrm, eyePos);
-	attenuation = calcAttenuation(
-		lightDist, lightDistSq,
-		lightSz, lightSzInvSq, lightSzInv, lightSzSq);
-
-	diffuseCoefficient = max(0.0, diffuseCoefficient);
-	specularCoefficient = pow64(max(0.0, specularCoefficient));
-
-	attenuationColor = attenuation * lightCol;
-	diffuseLightTotal += attenuationColor * diffuseCoefficient;
-	specularLightTotal += attenuationColor * specularCoefficient;
-}
 
 float random(in vec2 uv)
 {
@@ -298,54 +195,10 @@ vec4 juliaFractal()
 }
 void main()
 {
-
-	// DUMMY OUTPUT: all fragments are colored based on model index
-//	vec4 color[6] = vec4[6] ( vec4(1.0, 0.0, 0.0, 1.0), vec4(1.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 0.0, 1.0), vec4(0.0, 1.0, 1.0, 1.0), vec4(0.0, 0.0, 1.0, 1.0), vec4(1.0, 0.0, 1.0, 1.0) );
-//	rtFragColor = color[vModelID % 6];
-
-	mat4 tangentBasis_view = mat4(
-		normalize(vTangentBasis_view[0]),
-		normalize(vTangentBasis_view[1]),
-		normalize(vTangentBasis_view[2]),
-		vTangentBasis_view[3]
-	);
-
-	vec4 T = tangentBasis_view[0];
-	vec4 B = tangentBasis_view[1];
-	vec4 N = tangentBasis_view[2];
-	vec4 P = tangentBasis_view[3];
-
-	int i;
-	sPointLight light;
-	float kd, ks;
-	vec3 eyePos = vec3(0.0);
-	vec3 ambient = uColor.rgb * 0.1,
-		diffuseLightTotal = vec3(0.0),
-		specularLightTotal = diffuseLightTotal;
-
-	for (i = 0; i < uLightCt; ++i)
-	{
-		light = uPointLight[i];
-		addPhongComponents(
-			diffuseLightTotal, kd,
-			specularLightTotal,ks,
-			light.viewPos.xyz, light.color.rgb,
-			light.radius, light.radiusInvSq, light.radiusInv, light.radiusSq,
-			P.xyz, N.xyz, eyePos);
-	}
-
-
 	// textures
 	vec4 sample_dm = texture(uTex_dm, vTexcoord_atlas.xy);
 	vec4 sample_sm = texture(uTex_sm, vTexcoord_atlas.xy);
 
-
-	// final color
-	
-	/*rtFragColor.rgb = ambient
-					+ sample_dm.rgb * diffuseLightTotal
-					+ sample_sm.rgb * specularLightTotal;
-	*/
 	//rtMandelbrot.rgb = mandelbrotFractal().rgb;	//Display the fractal pattern created
 	rtMandelbrot.rgb = vec3(1.0);	//Display the fractal pattern created
 	//rtMandelbrot.a = sample_dm.a;
