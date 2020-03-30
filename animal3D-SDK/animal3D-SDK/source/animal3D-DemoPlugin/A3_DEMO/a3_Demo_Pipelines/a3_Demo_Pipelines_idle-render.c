@@ -92,6 +92,9 @@ void a3pipelines_render_controls(a3_DemoState const* demoState, a3_Demo_Pipeline
 		"Pass: Horizontal blur (1/8 frame)",
 		"Pass: Vertical blur (1/8 frame)",
 		"Pass: Bloom composite",
+		"Fractal: Mandelbrot",	//Midterm
+		"Fractal: Julia",
+		"Fractal: Noise",
 	};
 	a3byte const* targetText_shadow[pipelines_target_shadow_max] = {
 		"Depth buffer",
@@ -139,6 +142,9 @@ void a3pipelines_render_controls(a3_DemoState const* demoState, a3_Demo_Pipeline
 		targetText_blur,
 		targetText_blur,
 		targetText_composite,
+		targetText_scene,
+		targetText_scene,
+		targetText_scene,
 	};
 
 	// text color

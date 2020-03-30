@@ -127,20 +127,40 @@ vec4 finalWarp()
 }
 
 
-//Currently used fractal pattern
-vec4 fractalTest()
+//Previously used fractal pattern
+//vec4 fractalTest()
+//{
+//	//http://nuclear.mutantstargoat.com/articles/sdr_fract/ fractals
+//	vec2 z, c;
+//	/*Manelbrot
+//    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
+//    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
+//	*/
+//
+//	///*Julia
+//	c.x = 4.0 * (vTexcoord_atlas.x -0.5);
+//	c.y = 3.0 * (vTexcoord_atlas.y - 0.5);
+//	//*/
+//	int i;
+//    z = c;
+//    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+//        float x = (z.x * z.x - z.y * z.y) + c.x;
+//        float y = (z.y * z.x + z.x * z.y) + c.y;
+//
+//        if((x * x + y * y) > 173.0) break;
+//        z.x = x;
+//        z.y = y;
+//    }
+//	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+//}
+//
+vec4 mandelbrotFractal()
 {
-	//http://nuclear.mutantstargoat.com/articles/sdr_fract/ fractals
 	vec2 z, c;
-	/*Manelbrot
-    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
-    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
-	*/
-
-	///*Julia
-	c.x = 4.0 * (vTexcoord_atlas.x -0.5);
-	c.y = 3.0 * (vTexcoord_atlas.y - 0.5);
-	//*/
+	//Manelbrot
+    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0;// - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0;// - testPos.y*0.2;
+	
 	int i;
     z = c;
     for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
@@ -154,12 +174,13 @@ vec4 fractalTest()
 	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
-vec4 mandelbrotFractal()
+
+vec4 mandelbrotFractalProjection()
 {
 	vec2 z, c;
-	//Manelbrot
-    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//Testpos deals with the scale of the fractal pattern, the subtraction from vTexcoord_atlas deals with position on screen (I think)
-    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;
+	//Mandelbrot
+    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
 	
 	int i;
     z = c;

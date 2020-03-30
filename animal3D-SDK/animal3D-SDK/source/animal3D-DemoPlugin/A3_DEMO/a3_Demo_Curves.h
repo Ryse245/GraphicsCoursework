@@ -146,6 +146,7 @@ extern "C"
 		curves_fractal_mandelbrot = 0,
 		curves_fractal_julia,
 		curves_fractal_noise,
+		curves_fractal_mandelbrot_proj,
 		curves_target_fractal_max,
 
 		curves_display_finalcolor = 0,		// final display color
