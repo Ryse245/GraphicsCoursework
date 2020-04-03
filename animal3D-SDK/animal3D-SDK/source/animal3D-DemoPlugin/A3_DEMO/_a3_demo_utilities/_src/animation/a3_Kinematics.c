@@ -51,6 +51,21 @@ extern inline a3i32 a3kinematicsSolveForwardPartial(const a3_HierarchyState *hie
 			//5 LINES OF CODE
 			a3i32 parentIndex;
 			//4 LINES LEFT
+
+			//if node is root(parent index is -1), Node world transform is node local transform
+			//else, Node world transform = parent's world transform * node's local transform
+
+			/* something like this
+			a3i32 parentIndex = hierarchyState->poseGroup->hierarchy->nodes[i].parentIndex;
+			if (parentIndex == -1)
+			{
+				hierarchyState->objectSpace->transform = hierarchyState->localSpace[i].transform;
+			}
+			else
+			{
+				hierarchyState->objectSpace->transform = hierarchyState->objectSpace[parentIndex].transform * hierarchyState->localSpace[i].transform;
+			}
+			*/
 		}
 
 		// done, return number of nodes updated
