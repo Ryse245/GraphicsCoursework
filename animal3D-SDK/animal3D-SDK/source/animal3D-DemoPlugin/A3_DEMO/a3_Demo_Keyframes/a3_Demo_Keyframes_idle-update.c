@@ -216,5 +216,5 @@ void a3keyframes_update(a3_DemoState* demoState, a3_Demo_Keyframes* demoMode, a3
 	}
 }
 
-
+//in update, assign position and rotation for all joints in heirarchy
 //-----------------------------------------------------------------------------
