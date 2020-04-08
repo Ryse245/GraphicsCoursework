@@ -47,6 +47,7 @@ uniform ubTransformMVP {
 
 struct sHierarchyNode
 {
+	int nodeName[MAX_NODES];
 	int index;
 	int parentIndex;
 };
@@ -64,7 +65,6 @@ void main()
 {
 	gl_Position = uMVP[gl_InstanceID] * aPosition;
 
-	sHierarchyNode node = uNode[gl_InstanceID];
 	// DUMMY OUTPUT: select first color
-	vColor = uColor[node.index];
+	vColor = uColor[uNode[2].index];
 }
