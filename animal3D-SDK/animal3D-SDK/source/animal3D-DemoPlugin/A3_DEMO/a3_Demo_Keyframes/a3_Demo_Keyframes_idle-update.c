@@ -161,7 +161,19 @@ void a3keyframes_update(a3_DemoState* demoState, a3_Demo_Keyframes* demoMode, a3
 		currentHierarchyState->localPose, currentHierarchy->numNodes, 0);
 	a3kinematicsSolveForward(demoState->hierarchyState_skel);
 
-
+	//interpolation between poses
+	a3real3Lerp(currentHierarchyState->localPose->nodePose->orientation.v,
+		currentHierarchyPoseGroup->pose[0].nodePose->orientation.v,
+		currentHierarchyPoseGroup->pose[1].nodePose->orientation.v,
+		demoState->segmentParam);
+	a3real3Lerp(currentHierarchyState->localPose->nodePose->translation.v,
+		currentHierarchyPoseGroup->pose[0].nodePose->translation.v,
+		currentHierarchyPoseGroup->pose[1].nodePose->translation.v,
+		demoState->segmentParam);
+	a3real3Lerp(currentHierarchyState->localPose->nodePose->scale.v,
+		currentHierarchyPoseGroup->pose[0].nodePose->scale.v,
+		currentHierarchyPoseGroup->pose[1].nodePose->scale.v,
+		demoState->segmentParam);
 	// update buffers: 
 	//	-> calculate and store bone transforms
 	//	-> calculate and store joint transforms
