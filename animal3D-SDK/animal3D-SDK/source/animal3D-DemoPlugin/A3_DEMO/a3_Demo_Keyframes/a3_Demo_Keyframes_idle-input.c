@@ -123,7 +123,7 @@ void a3keyframesCB_input_keyCharHold(a3_DemoState const* demoState, a3_Demo_Keyf
 	// individual DOF editing
 	if (demoMode->editingJoint)
 	{
-		a3_HierarchyNodePose* currentNodePose = demoState->hierarchyState_skel[demoMode->editSkeletonIndex].poseGroup->pose[0].nodePose + demoMode->editJointIndex;
+		a3_HierarchyNodePose* currentNodePose = demoState->hierarchyState_skel[demoMode->editSkeletonIndex].poseGroup->pose[1].nodePose + demoMode->editJointIndex;
 		const a3_HierarchyPoseFlag currentPoseFlag = demoState->hierarchyPoseFlag_skel[demoMode->editSkeletonIndex][demoMode->editJointIndex];
 		const a3boolean doesRotate = currentPoseFlag & a3poseFlag_rotate;
 		const a3boolean doesTranslate = currentPoseFlag & a3poseFlag_translate;
