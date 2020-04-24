@@ -58,6 +58,7 @@ uniform int uLightCt;
 uniform vec4 uColor;
 uniform double uTime;
 uniform sampler2D uTex_dm, uTex_sm;
+uniform sampler2D tex_gradient;
 uniform sampler2D tex_ramp_dm;
 
 
@@ -273,7 +274,7 @@ vec4 mandelbrotFractal()
 	
 	int i;
     z = c;
-    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -281,7 +282,7 @@ vec4 mandelbrotFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 
@@ -294,7 +295,7 @@ vec4 mandelbrotFractalProjection()
 	
 	int i;
     z = c;
-    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -302,7 +303,7 @@ vec4 mandelbrotFractalProjection()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 vec4 juliaFractal()
@@ -314,7 +315,7 @@ vec4 juliaFractal()
 
 	int i;
     z = c;
-    for(i=0; i<10; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -322,7 +323,7 @@ vec4 juliaFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 void main()

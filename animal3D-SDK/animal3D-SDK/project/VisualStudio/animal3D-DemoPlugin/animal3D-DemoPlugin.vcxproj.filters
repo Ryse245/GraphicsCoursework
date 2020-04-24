@@ -34,9 +34,6 @@
     <Filter Include="Resource Files\A3_DEMO\glsl\4x">
       <UniqueIdentifier>{baef5553-8143-4e09-b432-4db39f33224e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs">
-      <UniqueIdentifier>{b23c4635-6a55-432e-9453-d8ecd1441102}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs">
       <UniqueIdentifier>{a1c202b9-b43e-420b-8f3a-510ab7f41122}</UniqueIdentifier>
     </Filter>
@@ -54,9 +51,6 @@
     </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\02-shading">
       <UniqueIdentifier>{e068547d-5169-4ecf-a26c-40357ca40473}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\02-shading">
-      <UniqueIdentifier>{80bb3cf4-aa64-41c0-996a-fbbd2bab026a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\03-framebuffer">
       <UniqueIdentifier>{6448f6e2-2d94-4c27-b50e-b5cd9862ac0c}</UniqueIdentifier>
@@ -79,9 +73,6 @@
     <Filter Include="Source Files\common\A3_DEMO\a3_Demo_Pipelines">
       <UniqueIdentifier>{d6835a4f-ee95-4f99-960f-c8f0dc2361a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\04-multipass">
-      <UniqueIdentifier>{875cef4f-7ab6-4812-862b-f31cfac399db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\04-multipass">
       <UniqueIdentifier>{2d1e448c-8909-41db-8100-cbb5ea0c9702}</UniqueIdentifier>
     </Filter>
@@ -91,14 +82,8 @@
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\06-deferred">
       <UniqueIdentifier>{f19e940e-68e8-4bed-ad32-94c643de3731}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\06-deferred">
-      <UniqueIdentifier>{d15f0b22-54ec-4cc8-a550-1d7cb625c0b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\common\A3_DEMO\a3_Demo_Curves">
       <UniqueIdentifier>{c18f34fd-b94d-4e57-b5bf-921b99d6c22f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\07-curves">
-      <UniqueIdentifier>{e4fd9b23-c5db-4b1f-ba0d-cccd4cc2e5e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\gs\07-curves">
       <UniqueIdentifier>{9c6354ee-a366-4284-b933-145bcc58aa74}</UniqueIdentifier>
@@ -108,6 +93,21 @@
     </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\fs\Midterm">
       <UniqueIdentifier>{f7ce36a7-84f4-491c-98d6-080cd3cebdc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs">
+      <UniqueIdentifier>{b23c4635-6a55-432e-9453-d8ecd1441102}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\02-shading">
+      <UniqueIdentifier>{80bb3cf4-aa64-41c0-996a-fbbd2bab026a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\04-multipass">
+      <UniqueIdentifier>{875cef4f-7ab6-4812-862b-f31cfac399db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\06-deferred">
+      <UniqueIdentifier>{d15f0b22-54ec-4cc8-a550-1d7cb625c0b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\07-curves">
+      <UniqueIdentifier>{e4fd9b23-c5db-4b1f-ba0d-cccd4cc2e5e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\A3_DEMO\glsl\4x\vs\Midterm">
       <UniqueIdentifier>{222d769d-80ce-41e7-82f8-e73c795f95ad}</UniqueIdentifier>

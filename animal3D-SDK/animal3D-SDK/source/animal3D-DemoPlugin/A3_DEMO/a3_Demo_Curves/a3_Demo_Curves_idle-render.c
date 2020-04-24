@@ -429,6 +429,7 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, skyblue);
 	a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 	a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
+	a3textureActivate(demoState->tex_gradient, a3tex_unit06);
 
 
 	// select pipeline algorithm

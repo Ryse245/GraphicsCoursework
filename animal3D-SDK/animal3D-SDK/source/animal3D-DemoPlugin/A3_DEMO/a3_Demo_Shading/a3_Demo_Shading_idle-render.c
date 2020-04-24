@@ -327,6 +327,7 @@ void a3shading_render(a3_DemoState const* demoState, a3_Demo_Shading const* demo
 			a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);	//Added
 			a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 			a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);
+			a3textureActivate(demoState->tex_gradient, a3tex_unit06);
 
 			// individual object requirements: 
 			//	- modelviewprojection

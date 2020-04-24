@@ -802,6 +802,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		a3demo_setUniformDefaultInteger(currentDemoProg, uTex_sm_ramp, defaultTexUnits + 5);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uTex_shadow, defaultTexUnits + 6);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uTex_proj, defaultTexUnits + 7);
+		a3demo_setUniformDefaultInteger(currentDemoProg, uTex_gradient, defaultTexUnits + 8);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uImage00, defaultTexUnits + 0);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uImage01, defaultTexUnits + 1);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uImage02, defaultTexUnits + 2);
@@ -890,6 +891,7 @@ void a3demo_loadTextures(a3_DemoState* demoState)
 			a3_DemoStateTexture texRampDM[1];
 			a3_DemoStateTexture texRampSM[1];
 			a3_DemoStateTexture texChecker[1];
+			a3_DemoStateTexture texGradient[1];
 		};
 	} textureList = {
 		{
@@ -905,6 +907,7 @@ void a3demo_loadTextures(a3_DemoState* demoState)
 			{ demoState->tex_ramp_dm,		"tex:ramp-dm",		"../../../../resource/tex/sprite/celRamp_dm.png" },
 			{ demoState->tex_ramp_sm,		"tex:ramp-sm",		"../../../../resource/tex/sprite/celRamp_sm.png" },
 			{ demoState->tex_checker,		"tex:checker",		"../../../../resource/tex/sprite/checker.png" },
+			{ demoState->tex_gradient,		"tex:gradient",		"../../../../resource/tex/sprite/newGradient.png" },
 		}
 	};
 	const a3ui32 numTextures = sizeof(textureList) / sizeof(a3_DemoStateTexture);
