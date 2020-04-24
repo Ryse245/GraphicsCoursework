@@ -282,7 +282,7 @@ vec4 mandelbrotFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 
@@ -303,7 +303,7 @@ vec4 mandelbrotFractalProjection()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 vec4 juliaFractal()
@@ -323,7 +323,7 @@ vec4 juliaFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_gradient,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
 void main()
