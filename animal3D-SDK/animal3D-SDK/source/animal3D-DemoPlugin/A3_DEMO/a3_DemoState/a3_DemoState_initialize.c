@@ -279,7 +279,7 @@ void a3demo_initScene(a3_DemoState *demoState)
 	demoState->activeCamera = demoState->demoMode_pipelines->activeCamera;
 
 	//starting fractal iterations
-	demoState->fractalNumIterations = 2000;
+	demoState->fractalNumIterations = 25;
 }
 
 // refresh non-asset scene objects (e.g. re-link pointers)
