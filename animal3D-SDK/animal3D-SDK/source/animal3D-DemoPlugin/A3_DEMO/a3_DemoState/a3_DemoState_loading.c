@@ -816,6 +816,7 @@ void a3demo_loadShaders(a3_DemoState *demoState)
 		a3demo_setUniformDefaultInteger(currentDemoProg, uIndex, defaultInt);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uCount, defaultInt);
 		a3demo_setUniformDefaultInteger(currentDemoProg, uFlag, defaultInt);
+		a3demo_setUniformDefaultInteger(currentDemoProg, uNumIterations, defaultInt);
 		a3demo_setUniformDefaultDouble(currentDemoProg, uAxis, defaultDouble);
 		a3demo_setUniformDefaultDouble(currentDemoProg, uSize, defaultDouble);
 		a3demo_setUniformDefaultDouble(currentDemoProg, uTime, defaultDouble);

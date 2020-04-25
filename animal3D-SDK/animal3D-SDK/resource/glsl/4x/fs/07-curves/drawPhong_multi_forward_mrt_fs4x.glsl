@@ -57,6 +57,7 @@ uniform ubPointLight {
 uniform int uLightCt;
 uniform vec4 uColor;
 uniform double uTime;
+uniform int uFlag; //fractal iterations
 uniform sampler2D uTex_dm, uTex_sm;
 uniform sampler2D tex_gradient;
 uniform sampler2D tex_ramp_dm;
@@ -274,7 +275,7 @@ vec4 mandelbrotFractal()
 	
 	int i;
     z = c;
-    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -295,7 +296,7 @@ vec4 mandelbrotFractalProjection()
 	
 	int i;
     z = c;
-    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -315,7 +316,7 @@ vec4 juliaFractal()
 
 	int i;
     z = c;
-    for(i=0; i<2000; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 

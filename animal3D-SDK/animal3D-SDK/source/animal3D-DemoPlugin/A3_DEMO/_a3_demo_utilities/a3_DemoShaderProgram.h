@@ -102,7 +102,8 @@ extern "C"
 				uFlag,						// generic flag
 				uAxis,						// generic axis
 				uSize,						// generic size
-				uTime;						// time
+				uTime,						// time
+				uNumIterations;				// fractal iterations
 		};
 
 		// uniform blocks

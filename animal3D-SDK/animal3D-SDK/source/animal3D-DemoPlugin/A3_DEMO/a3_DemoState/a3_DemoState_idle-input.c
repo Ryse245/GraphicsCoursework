@@ -155,6 +155,8 @@ void a3demoCB_input_keyCharPress(a3_DemoState* demoState, a3i32 asciiKey)
 		// increase/decrease light count
 		a3demoCtrlCasesCap(demoState->forwardLightCount, demoStateMaxCount_lightObject, 0, 'L', 'l');
 		a3demoCtrlCasesCap(demoState->deferredLightCount, demoStateMaxCount_lightVolume, 0, ':', ';');
+		//Control number of iterations for fractals
+		a3demoCtrlCasesCap(demoState->fractalNumIterations, demoStateMaxCount_fractalIterations, 1, '#', '@');
 
 
 		// toggle grid
@@ -214,6 +216,7 @@ void a3demoCB_input_keyCharHold(a3_DemoState* demoState, a3i32 asciiKey)
 	{
 		// increase/decrease light count
 		a3demoCtrlCasesCap(demoState->deferredLightCount, demoStateMaxCount_lightVolume, 0, ':', ';');
+		a3demoCtrlCasesCap(demoState->fractalNumIterations, demoStateMaxCount_fractalIterations, 1, '#', '@');
 	}
 
 

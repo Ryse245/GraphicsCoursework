@@ -117,6 +117,8 @@ extern "C"
 		demoStateMaxCount_texture = 16,
 
 		demoStateMaxCount_framebuffer = 16,
+
+		demoStateMaxCount_fractalIterations = 4000,
 	};
 
 	
@@ -212,6 +214,8 @@ extern "C"
 		a3vec4 curveWaypoint[demoStateMaxCount_waypoint];
 		a3vec4 curveHandle[demoStateMaxCount_waypoint];
 
+		//fractal iterations
+		a3ui32 fractalNumIterations;
 
 		//---------------------------------------------------------------------
 		// object arrays: organized as anonymous unions for two reasons: 
