@@ -327,6 +327,32 @@ vec4 juliaFractal()
 	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 }
 
+vec4 kochFractal()
+{
+	vec4 returnCol = vec4(0);
+	vec2 coordinates = vTangentBasis_view[3].xy / 10.0;
+	coordinates.x+= 0.5;
+	//float angle = (1.0/4.0)*3.1415;	//Angle to create point, while still being connected
+	float angle = (2.0/3.0)*3.1415;	//Angle to create point, while still being connected
+	vec2 normal = vec2(sin(angle), cos(angle));
+	float scale = 0.25;	//Scale doesn't start at 1 because the lower the scale is, the clearer (and thinner) the line at the end
+	for(int i = 0; i < 20; i++)
+	{
+		coordinates *= 3;	//3 because line needs to be broken into 3 segments for each... segment
+		scale *= 3;
+		coordinates.x -= 1.5;
+
+		coordinates.x = abs(coordinates.x);	//Flips fractal, making it symmetrical (kinda)
+		coordinates.x -= 0.5;
+		coordinates -= normal*min(0.0, dot(coordinates, normal))*2;
+	}
+
+	float info = length(coordinates - vec2(clamp(coordinates.x, -1, 1), 0));
+
+	returnCol += smoothstep(0.03, 0.0, info/scale);
+	return returnCol;
+}
+
 void main()
 {
 
@@ -384,11 +410,12 @@ void main()
 	rtAtlasTexcoord = mandelbrotFractal();
 	rtViewTangent = finalWarp();
 	rtViewBitangent = mandelbrotFractalProjection();
-	rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);
+	rtViewNormal = kochFractal()+sample_dm;
+	//rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);
 	rtViewPosition = P;
 
 	// output lighting
-	//rtDiffuseLightTotal = vec4(diffuseLightTotal, 1.0);
-	rtDiffuseLightTotal = texture(tex_ramp_dm,vTexcoord_atlas.xy);
+	rtDiffuseLightTotal = vec4(diffuseLightTotal, 1.0);
+	//rtDiffuseLightTotal = texture(tex_ramp_dm,vTexcoord_atlas.xy);
 	rtSpecularLightTotal = vec4(specularLightTotal, 1.0);
 }
