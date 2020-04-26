@@ -266,12 +266,24 @@ vec4 finalWarp()
 //	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
 //}
 //
+
+vec2 center = vec2(0.7,0.0); //centered
+//vec2 center = vec2(0.25,0.65); //offset for zooming
+int zoomNum = 1;
+float scale = 2.2;
+float zoomFactor = .025;
+
 vec4 mandelbrotFractal()
 {
+	for(int j = 0; j < zoomNum;j++)
+	{
+		scale *=  1 - zoomFactor * 2.0;
+	}
+
 	vec2 z, c;
 	//Manelbrot
-    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0;// - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
-    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0;// - testPos.y*0.2;
+    c.x = 1.333 * (vTexcoord_atlas.x - 0.5) * scale - center.x;// - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - 0.5)* scale - center.y;// - testPos.y*0.2;
 	
 	int i;
     z = c;
@@ -283,7 +295,7 @@ vec4 mandelbrotFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
 }
 
 
@@ -294,17 +306,18 @@ vec4 mandelbrotFractalProjection()
     c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
     c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
 	
+	c /= 2.0;
 	int i;
     z = c;
     for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
-        if((x * x + y * y) > 173.0) break;
+        if((x * x + y * y) > 100.0) break;
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
 }
 
 vec4 juliaFractal()
@@ -320,11 +333,11 @@ vec4 juliaFractal()
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
-        if((x * x + y * y) > 173.0) break;
+        if((x * x + y * y) > 4.0) break;
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == 10.0 ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
 }
 
 vec4 kochFractal()
