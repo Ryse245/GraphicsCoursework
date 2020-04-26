@@ -175,6 +175,8 @@ void a3demo_render_data(const a3_DemoState* demoState,
 		"fps_target = %.4lf ", (a3f64)demoState->renderTimer->ticks / demoState->renderTimer->totalTime);
 	a3textDraw(demoState->text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Fractal Iterations ('@' decr | incr '#'): %u", demoState->fractalNumIterations);
+	a3textDraw(demoState->text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Fractal Zooms ('n' decr | incr 'N'): %u", demoState->fractalNumZoom);
 
 	// global controls
 	textOffset = -0.8f;

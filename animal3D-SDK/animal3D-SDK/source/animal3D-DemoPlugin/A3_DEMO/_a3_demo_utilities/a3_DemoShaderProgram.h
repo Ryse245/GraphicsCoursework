@@ -99,11 +99,13 @@ extern "C"
 				// common general uniform handles
 				uIndex,						// generic index
 				uCount,						// generic count
-				uFlag,						// generic flag
+				uFlag,						// generic flag, also used for fractal iterations
 				uAxis,						// generic axis
 				uSize,						// generic size
 				uTime,						// time
-				uNumIterations;				// fractal iterations
+				uFractalIterations,			// number of fractal iterations
+				uFractalZoomNum,			// number of zooms done for fractal
+				uFractalCenter;			// center of fractal, used for zooming into a good spot
 		};
 
 		// uniform blocks

@@ -280,6 +280,9 @@ void a3demo_initScene(a3_DemoState *demoState)
 
 	//starting fractal iterations
 	demoState->fractalNumIterations = 25;
+	demoState->fractalNumZoom = 0;
+	demoState->fractalCenter.x = (a3real)0.7;
+	demoState->fractalCenter.y = (a3real)0.0;
 }
 
 // refresh non-asset scene objects (e.g. re-link pointers)

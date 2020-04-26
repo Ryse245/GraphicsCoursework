@@ -119,6 +119,8 @@ extern "C"
 		demoStateMaxCount_framebuffer = 16,
 
 		demoStateMaxCount_fractalIterations = 4000,
+
+		demoStateMaxCount_fractalZoom = 1000,
 	};
 
 	
@@ -216,6 +218,8 @@ extern "C"
 
 		//fractal iterations
 		a3ui32 fractalNumIterations;
+		a3ui32 fractalNumZoom;
+		a3vec2 fractalCenter;
 
 		//---------------------------------------------------------------------
 		// object arrays: organized as anonymous unions for two reasons: 

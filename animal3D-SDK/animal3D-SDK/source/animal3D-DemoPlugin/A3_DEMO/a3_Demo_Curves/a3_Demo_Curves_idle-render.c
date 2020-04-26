@@ -427,7 +427,8 @@ void a3curves_render(a3_DemoState const* demoState, a3_Demo_Curves const* demoMo
 	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uPB_inv, 1, projectionBiasMat_inv.mm);
 	a3shaderUniformSendFloatMat(a3unif_mat4, 0, currentDemoProgram->uAtlas, 1, a3mat4_identity.mm);
 	a3shaderUniformSendDouble(a3unif_single, currentDemoProgram->uTime, 1, &demoState->renderTimer->totalTime);
-	a3shaderUniformSendInt(a3unif_single, currentDemoProgram->uFlag, 1, &demoState->fractalNumIterations); //send number of iterations
+	a3shaderUniformSendInt(a3unif_single, currentDemoProgram->uFractalIterations, 1, &demoState->fractalNumIterations); //send number of fractal iterations
+	a3shaderUniformSendInt(a3unif_single, currentDemoProgram->uFractalZoomNum, 1, &demoState->fractalNumZoom); //send number of fractal zooms
 	a3shaderUniformSendFloat(a3unif_vec4, currentDemoProgram->uColor, 1, skyblue);
 	a3textureActivate(demoState->tex_ramp_dm, a3tex_unit04);
 	a3textureActivate(demoState->tex_ramp_sm, a3tex_unit05);

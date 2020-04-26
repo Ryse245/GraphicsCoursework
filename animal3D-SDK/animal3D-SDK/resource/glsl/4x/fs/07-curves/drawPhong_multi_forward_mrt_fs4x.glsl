@@ -57,7 +57,11 @@ uniform ubPointLight {
 uniform int uLightCt;
 uniform vec4 uColor;
 uniform double uTime;
-uniform int uFlag; //fractal iterations
+
+uniform int uFractalIterations; //fractal iterations
+uniform int uFractalZoomNum; //fractal zooms
+uniform vec2 uFractalCenter; //fractal center
+
 uniform sampler2D uTex_dm, uTex_sm;
 uniform sampler2D tex_gradient;
 uniform sampler2D tex_ramp_dm;
@@ -269,15 +273,17 @@ vec4 finalWarp()
 
 vec2 center = vec2(0.7,0.0); //centered
 //vec2 center = vec2(0.25,0.65); //offset for zooming
-int zoomNum = 1;
+//int zoomNum = 1;
 float scale = 2.2;
 float zoomFactor = .025;
 
 vec4 mandelbrotFractal()
 {
-	for(int j = 0; j < zoomNum;j++)
+	for(int j = 0; j < uFractalZoomNum;j++)
 	{
-		scale *=  1 - zoomFactor * 2.0;
+		scale *=  1 - zoomFactor * 2.0; //zoom in on the fractal, Adding zoomfactor zooms out
+		center.x += .001 *j * scale/3.0;
+		center.y -= .001* j * scale /3.0; //move center while zooming, dunno how to make it not eventually go out of the fractal
 	}
 
 	vec2 z, c;
@@ -287,7 +293,7 @@ vec4 mandelbrotFractal()
 	
 	int i;
     z = c;
-    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFractalIterations; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -295,7 +301,7 @@ vec4 mandelbrotFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFractalIterations ? 0.0 : float(i))/100.0);
 }
 
 
@@ -303,13 +309,13 @@ vec4 mandelbrotFractalProjection()
 {
 	vec2 z, c;
 	//Mandelbrot
-    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * 2.0 - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
-    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * 2.0 - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
+    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * scale - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * scale - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
 	
 	c /= 2.0;
 	int i;
     z = c;
-    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFractalIterations; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -317,7 +323,7 @@ vec4 mandelbrotFractalProjection()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFractalIterations ? 0.0 : float(i))/100.0);
 }
 
 vec4 juliaFractal()
@@ -329,7 +335,7 @@ vec4 juliaFractal()
 
 	int i;
     z = c;
-    for(i=0; i<uFlag; i++) {	//i variable deals with how detailed the fractal pattern becomes
+    for(i=0; i<uFractalIterations; i++) {	//i variable deals with how detailed the fractal pattern becomes
         float x = (z.x * z.x - z.y * z.y) + c.x;
         float y = (z.y * z.x + z.x * z.y) + c.y;
 
@@ -337,7 +343,7 @@ vec4 juliaFractal()
         z.x = x;
         z.y = y;
     }
-	return texture(tex_ramp_dm,vec2(i == uFlag ? 0.0 : float(i))/100.0);
+	return texture(tex_ramp_dm,vec2(i == uFractalIterations ? 0.0 : float(i))/100.0);
 }
 
 vec4 kochFractal()
