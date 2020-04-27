@@ -363,7 +363,7 @@ vec4 kochFractal()
 	float angle = (2.0/3.0)*3.1415;	//Angle to create point, while still being connected
 	vec2 normal = vec2(sin(angle), cos(angle));
 	float scale = 0.25;	//Scale doesn't start at 1 because the lower the scale is, the clearer (and thinner) the line at the end
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i < uFractalIterations; i++)
 	{
 		coordinates *= 3;	//3 because line needs to be broken into 3 segments for each... segment
 		scale *= 3;
