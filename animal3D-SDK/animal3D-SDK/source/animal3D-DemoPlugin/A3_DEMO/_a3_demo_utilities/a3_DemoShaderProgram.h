@@ -99,7 +99,7 @@ extern "C"
 				// common general uniform handles
 				uIndex,						// generic index
 				uCount,						// generic count
-				uFlag,						// generic flag, also used for fractal iterations
+				uFlag,						// generic flag
 				uAxis,						// generic axis
 				uSize,						// generic size
 				uTime,						// time
