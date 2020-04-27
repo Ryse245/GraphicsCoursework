@@ -161,6 +161,13 @@ void a3demoCB_input_keyCharPress(a3_DemoState* demoState, a3i32 asciiKey)
 		//Control number of zooms in fractal
 		a3demoCtrlCasesCap(demoState->fractalNumZoom, demoStateMaxCount_fractalZoom, 0, 'N', 'n');
 
+		//not being used because only can move by 1 each press and not 0.1 or something
+		//Control center x
+		a3demoCtrlCasesCap(demoState->fractalCenter.x, 5000.0, -5000.0, '%', '$');
+		//Control center y
+		a3demoCtrlCasesCap(demoState->fractalCenter.y, 5000.0, -5000.0, '&', '^');
+		
+
 
 		// toggle grid
 		a3demoCtrlCaseToggle(demoState->displayGrid, 'g');
@@ -219,8 +226,11 @@ void a3demoCB_input_keyCharHold(a3_DemoState* demoState, a3i32 asciiKey)
 	{
 		// increase/decrease light count
 		a3demoCtrlCasesCap(demoState->deferredLightCount, demoStateMaxCount_lightVolume, 0, ':', ';');
+		//fractal stuff
 		a3demoCtrlCasesCap(demoState->fractalNumIterations, demoStateMaxCount_fractalIterations, 1, '#', '@');
 		a3demoCtrlCasesCap(demoState->fractalNumZoom, demoStateMaxCount_fractalZoom, 0, 'N', 'n');
+		a3demoCtrlCasesCap(demoState->fractalCenter.x, 5000.0, -5000.0, '%', '$');
+		a3demoCtrlCasesCap(demoState->fractalCenter.y, 5000.0, -5000.0, '&', '^');
 	}
 
 

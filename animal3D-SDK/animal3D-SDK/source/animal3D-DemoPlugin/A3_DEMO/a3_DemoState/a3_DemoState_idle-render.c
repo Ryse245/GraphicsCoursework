@@ -177,6 +177,9 @@ void a3demo_render_data(const a3_DemoState* demoState,
 		"Fractal Iterations ('@' decr | incr '#'): %u", demoState->fractalNumIterations);
 	a3textDraw(demoState->text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
 		"Fractal Zooms ('n' decr | incr 'N'): %u", demoState->fractalNumZoom);
+	//display fractal center
+	a3textDraw(demoState->text, textAlign, textOffset += textOffsetDelta, textDepth, col.r, col.g, col.b, col.a,
+		"Fractal Center (X: '$' decr | incr '%%' , Y: '^' decr | incr '&'):  %.4lf,%.4lf", demoState->fractalCenter.x/1000.0, demoState->fractalCenter.y/1000.0);
 
 	// global controls
 	textOffset = -0.8f;

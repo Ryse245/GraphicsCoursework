@@ -271,8 +271,9 @@ vec4 finalWarp()
 //}
 //
 
-vec2 center = vec2(0.7,0.0); //centered
-//vec2 center = vec2(0.25,0.65); //offset for zooming
+//vec2 center = vec2(0.7,0.0); //centered
+vec2 center = vec2(uFractalCenter.x*0.001 , uFractalCenter.y * 0.001); //passed in center, scaled down to be modifiable
+//vec2 center = vec2(0.8,0.8); //offset for zooming directly into it
 //int zoomNum = 1;
 float scale = 2.2;
 float zoomFactor = .025;
@@ -282,8 +283,8 @@ vec4 mandelbrotFractal()
 	for(int j = 0; j < uFractalZoomNum;j++)
 	{
 		scale *=  1 - zoomFactor * 2.0; //zoom in on the fractal, Adding zoomfactor zooms out
-		center.x += .001 *j * scale/3.0;
-		center.y -= .001* j * scale /3.0; //move center while zooming, dunno how to make it not eventually go out of the fractal
+		//center.x += .001 *j * scale/3.0;
+		//center.y -= .001* j * scale /3.0; //move center while zooming, dunno how to make it not eventually go out of the fractal
 	}
 
 	vec2 z, c;
@@ -307,12 +308,19 @@ vec4 mandelbrotFractal()
 
 vec4 mandelbrotFractalProjection()
 {
+	for(int j = 0; j < uFractalZoomNum;j++)
+	{
+		scale *=  1 - zoomFactor * 2.0; //zoom in on the fractal, Adding zoomfactor zooms out
+		//center.x += .001 *j * scale/3.0;
+		//center.y -= .001* j * scale /3.0; //move center while zooming, dunno how to make it not eventually go out of the fractal
+	}
+
 	vec2 z, c;
 	//Mandelbrot
-    c.x = (vTexcoord_atlas.x - vTexcoord_atlas.x*0.5) * scale - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
-    c.y = (vTexcoord_atlas.y - vTexcoord_atlas.y*0.5) * scale - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
+    c.x = 1.333 * (vTexcoord_atlas.x - 0.5) * scale - center.x - testPos.x*0.2;	//The subtraction from vTexcoord_atlas deals with position on screen (I think)
+    c.y = (vTexcoord_atlas.y - 0.5) * scale - center.y - testPos.y*0.2;	//and the testPos subtraction creates a "projection" effect
 	
-	c /= 2.0;
+	//c /= 2.0;
 	int i;
     z = c;
     for(i=0; i<uFractalIterations; i++) {	//i variable deals with how detailed the fractal pattern becomes
@@ -422,13 +430,13 @@ void main()
 					+ sample_dm.rgb * diffuseLightTotal
 					+ sample_sm.rgb * specularLightTotal;*/
 	
-	rtFragColor.rgb = juliaFractal().rgb;	//Display the fractal pattern created
+	rtFragColor.rgb = mandelbrotFractal().rgb;	//Display the fractal pattern created
 	rtFragColor.a = sample_dm.a;
 	
 	// output attributes
-	rtAtlasTexcoord = mandelbrotFractal();
-	rtViewTangent = finalWarp();
-	rtViewBitangent = mandelbrotFractalProjection();
+	rtAtlasTexcoord = mandelbrotFractalProjection();
+	rtViewTangent = juliaFractal();
+	rtViewBitangent = finalWarp();
 	rtViewNormal = kochFractal()+sample_dm;
 	//rtViewNormal = vec4(N.xyz * 0.5 + 0.5, 1.0);
 	rtViewPosition = P;
